@@ -1,0 +1,152 @@
+/* fontface */
+@font-face {
+  font-family: 'Raleway';
+  src: url("assets/fonts/Raleway/Raleway-Medium.ttf") format("truetype");
+  font-weight: 400; }
+
+@font-face {
+  font-family: 'Raleway';
+  src: url("assets/fonts/Raleway/Raleway-Light.ttf") format("truetype");
+  font-weight: 300; }
+
+@font-face {
+  font-family: 'Sacramento';
+  src: url("assets/fonts/Sacramento/Sacramento-Regular.ttf") format("truetype"); }
+
+html {
+  height: 100%;
+  background: #55534e;
+}
+
+body {
+  font-family: 'Raleway';
+  color: #5c5c5c;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+/* link */
+a {
+  color: #ff5733;
+  text-decoration: none;
+}
+a:hover, a:focus, a:active {
+  color: #900c3f;
+  text-decoration: none;
+}
+a.custom-link {
+  color: #5c5c5c;
+  text-decoration: underline;
+}
+a.custom-link:hover, a.custom-link:focus, a.custom-link:active {
+  color: #900c3f;
+  text-decoration: underline; 
+}
+
+/* buttons */
+.btn {
+  font-size: 16px;
+  font-weight: 300;
+  color: #ffffff;
+  background: #ff5733;
+  padding: 5px 15px;
+  border: 1px solid #ff5733;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.btn:hover, .btn:active, .btn:focus {
+  background: #ffffff;
+  color: #ff5733; 
+}
+
+.form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.form-control:focus {
+  border-color: #5c5c5c;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-horizontal.login-form {
+  margin: 50px 0;
+}
+
+/* headline */
+.headline {
+  font-family: 'Sacramento';
+  font-size: 30px;
+  margin: 0 0 30px; }
+
+/* TOP BAR */
+#top-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  z-index: 999;
+  border-bottom: 1px solid #a8a8a8;
+  padding: 5px 0;
+}
+#top-bar .logo a {
+  display: block; 
+}
+#top-bar .logo a img {
+  max-width: 70px; 
+}
+#top-bar .btn {
+  font-size: 22px; 
+}
+#top-bar .menu {
+  float: right;
+  padding: 12px 0;
+}
+#top-bar .menu .btn, #top-bar .menu ul {
+  display: inline-block;
+}
+#top-bar .menu ul {
+  list-style: none;
+  margin: 0;
+}
+#top-bar .menu ul li {
+  display: inline-block; 
+}
+#top-bar .menu ul li a {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 300;
+  color: #5c5c5c;
+  padding: 5px 15px;
+  text-decoration: none;
+}
+#top-bar .menu ul li a:hover {
+  color: #ff5733; 
+}
+#top-bar .menu ul + .btn {
+  margin-left: 15px; 
+}
+#top-bar .menu .btn {
+  position: relative;
+  top: -3px; 
+}
+#top-bar + .page-content {
+  margin-top: 80px; 
+}
+#footer {
+  padding: 15px 0;
+  background: #55534e;
+  color: #ffffff;
+}
+#footer p {
+  margin: 0;
+  font-size: 12.8px;
+}

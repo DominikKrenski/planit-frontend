@@ -1,0 +1,18 @@
+.form-horizontal.login-form {
+    margin: 30px 0;
+}
+.bottom-links a {
+    margin-bottom: 30px;
+    display: block;
+    text-align: right;
+}
+.alert-danger {
+    margin-bottom: 30px;
+}
+.form-horizontal .form-group:last-of-type {
+    margin-bottom: 0;
+}
+label {
+    line-height: 38px;
+    margin: 0;
+}

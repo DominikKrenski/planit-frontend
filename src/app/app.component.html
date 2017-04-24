@@ -1,0 +1,35 @@
+<div id="top-bar" class="clearfix">
+  <div class="container">
+    <div class="col-lg-3 mol-md-3 col-sm-3 col-xs-3">
+      <div class="logo">
+        <a routerLink="/"><img src="../assets/images/logo.png" /></a>
+      </div>
+    </div>
+    <div class="col-lg-9 mol-md-9 col-sm-9 col-xs-9">
+      <div class="menu-wrapper">
+        <div class="menu desktop-menu">
+          <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/calendar">Plan</a></li>
+            <li><a routerLink="/events">Zadania</a></li>
+            <li><a routerLink="/tags">Tagi</a></li>
+            <li><a routerLink="/users">Użytkownicy</a></li>
+          </ul>
+            <a href="/login" class="btn">
+                Logowanie
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-content">
+  <router-outlet></router-outlet>
+</div>
+<div id="footer">
+  <div class="container">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <p class="text-xs-center">Dominik Kreński, Magda Mrzygłocka. Politechnika Gdańska 2017 / 2018</p>
+    </div>
+  </div>
+</div>

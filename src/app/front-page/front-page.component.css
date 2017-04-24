@@ -1,0 +1,57 @@
+/* header */
+#header {
+    color: #ffffff;
+    position: relative;
+}
+#header .header-bg {
+    background: #5c5c5c;
+}
+#header .header-bg:before {
+    content: '';
+    position: absolute;
+    background-image: url("../../assets/images/header-banner.jpg");
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    z-index: 1;
+}
+#header .header-bg .header-banner {
+    padding: 60px 0;
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2; 
+}
+#header .header-bg .header-banner h1 {
+    font-family: 'Sacramento';
+    letter-spacing: 20px;
+    font-size: 68px;
+    margin: 0;
+    line-height: 1.2;
+    border-bottom: 3px dashed #ffffff; 
+}
+#header .header-bg .header-banner h3 {
+    font-weight: 300;
+    letter-spacing: 5px; 
+    margin-top: 20px;
+}
+
+/* TOP */
+#top1 {
+  padding: 30px 0;
+}
+#top1 .top-icons .icon-item {
+    display: block;
+    padding: 0 15px;
+    vertical-align: top; 
+}
+#top1 .top-icons .icon-item img {
+    max-height: 100px;
+}
+
+/* TOP2 */
+#top2 {
+    padding: 30px 0;
+    background: #5c5c5c;
+    color: #ffffff; 
+}
