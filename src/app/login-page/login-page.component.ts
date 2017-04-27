@@ -1,8 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Http } from '@angular/http';
+import {
+  CanActivate, Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+ } from '@angular/router';
+
 import { Subject, Observable } from 'rxjs';
-import 'rxjs/Rx';
 import { Headers, RequestOptions } from '@angular/http';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'login-page',
@@ -11,9 +17,20 @@ import { Headers, RequestOptions } from '@angular/http';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(private http:Http) { }
+  constructor(private http:Http, private router: Router) { }
 
   ngOnInit() {
+    function getAuth() {
+        return JSON.parse(localStorage.getItem('currentUser'));
+    };
+
+    function getListOfUsers() {
+      console.log('mam token');
+    };
+
+    if(getAuth()) {
+      getListOfUsers();
+    }
   }
 
   formSubmit = 0;
@@ -28,29 +45,32 @@ export class LoginPageComponent implements OnInit {
   save(valid, userForm) {
     
     if (valid) {
-      console.log(userForm);
-
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
-      headers.append('Access-Control-Allow-Headers', 'Content-Type');
-      headers.append('Access-Control-Allow-Methods', 'POST');
-      headers.append('Access-Control-Allow-Origin', '*');
+
       let options = new RequestOptions({ headers: headers });
 
       return this.http.post(this.server, userForm, options)
-        .map(res => res.json())
-        .subscribe(
-          data => userForm = data,
-          err => console.log('ERROR!!!'),
-          () => console.log('Got response from API', userForm)
-        );
-      
-
+        .subscribe( 
+          (res) => {
+            var headers = res.headers.toJSON();
+            var authorization = headers['Authorization'][0];
+            localStorage.setItem('currentUser', JSON.stringify({ token: authorization }));
+            this.router.navigate(['/']);
+            location.reload();
+          },
+          err => {
+            this.formSubmit = 1;
+            this.userForm.login = '';
+            this.userForm.password = '';
+          }
+      );
     } else {
       this.formSubmit = 1;
+      this.userForm.login = '';
+      this.userForm.password = '';
       return;
     }
   }
-
 }
