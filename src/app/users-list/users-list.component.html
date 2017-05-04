@@ -1,13 +1,20 @@
 <div class="container">
   <div class="col-md-12">
+    {{currentUser}}
     <table class="table">
       <tr>
+        <th>Numer indeksu</th>
         <th>Imię</th>
         <th>Rola</th>
       </tr>
       <tr *ngFor="let user of users">
-        <td>{{user.login}}</td>
-        <td>{{user.role}}</td>
+        <td>{{user.INDEX_NUMBER}}</td>
+        <td>{{user.LOGIN}}</td>
+        <td>
+          <span *ngFor="let role of user.ROLES">
+              {{role.NAME}}<br />
+          </span>
+        </td>
       </tr>
     </table>
   </div>

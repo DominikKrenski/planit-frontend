@@ -8,13 +8,22 @@ import { UsersService } from './users.service'
 })
 export class UsersListComponent implements OnInit {
 
+  users = [];
+
+  currentUser = "";
+  authToken = localStorage.getItem('currentUser');
+
+  if(authToken) {
+    console.log('x');
+    this.currentUser = "A";
+  };
+  
   constructor(private usersService:UsersService) {
-    this.users = this.usersService.getUsers();
   }
 
   ngOnInit() {
+    this.usersService.getUsers((users)=>{
+      this.users = users;
+    });
   }
-
-  users = [];
-
 }

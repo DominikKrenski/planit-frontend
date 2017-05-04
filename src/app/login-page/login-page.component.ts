@@ -56,7 +56,7 @@ export class LoginPageComponent implements OnInit {
           (res) => {
             var headers = res.headers.toJSON();
             var authorization = headers['Authorization'][0];
-            localStorage.setItem('currentUser', JSON.stringify({ token: authorization }));
+            localStorage.setItem('currentUser', JSON.stringify({ authorization }));
             this.router.navigate(['/']);
             location.reload();
           },
