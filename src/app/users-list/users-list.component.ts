@@ -12,18 +12,46 @@ export class UsersListComponent implements OnInit {
 
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
+  info = '';
 
-  if(authToken) {
-    console.log('x');
-    this.currentUser = "A";
-  };
-  
+  getAuth() {
+      return JSON.parse(localStorage.getItem('currentUser'));
+  };  
+
   constructor(private usersService:UsersService) {
+    this.currentUser = this.getAuth();
   }
 
   ngOnInit() {
-    this.usersService.getUsers((users)=>{
-      this.users = users;
+    if(this.getAuth()) {
+      this.usersService.getUsers((users)=>{
+        this.users = users;
+      });
+    }    
+  };
+
+  removeUser(user) {
+    this.usersService.removeUser(user.ID);
+    var index = this.users.indexOf(user);
+    if (index > -1) {
+      this.users.splice(index, 1);
+    }
+  };
+  
+  isAdmin(roles) {
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i].NAME=="ROLE_ADMIN") {
+        return true;
+      }
+    }    
+    return false;
+  }
+
+  grantToAdmin(user) {
+    this.usersService.grantToAdmin(user.ID);
+    user.ROLES.push({
+      "ID": 1,
+      "NAME": "ROLE_ADMIN"
     });
   }
 }

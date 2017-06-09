@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <div class="row">
+      <div class="col-md-4 col-sm-8 col-xs-12">
+        <div class="my-image text-xs-center">
+          <img src="../assets/images/sample_user.png">
+        </div>
+      </div>
+      <div class="col-md-8 col-sm-12 col-xs-12">
+        <h3 class="headline text-md-center">Moje konto</h3>
+        <table class="table about-me-table">
+          <tr>
+            <td>Login</td>
+            <td>{{myinfo.LOGIN}}</td>
+          </tr>
+          <tr>
+            <td>Numer indeksu</td>
+            <td>{{myinfo.INDEX_NUMBER}}</td>
+          </tr>
+          <tr>
+            <td>Rola</td>
+            <td>
+              <span *ngFor="let role of myinfo.ROLES">
+                <span *ngIf="role.NAME=='ROLE_STUDENT'">Student</span>
+                <span *ngIf="role.NAME=='ROLE_ADMIN'">Administrator</span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Imię</td>
+            <td>{{myinfo.NAME}}</td>
+          </tr>
+          <tr>
+            <td>Nazwisko</td>
+            <td>{{myinfo.SURNAME}}</td>
+          </tr>
+          <tr>
+            <td>Rok rozpoczęcia</td>
+            <td>{{myinfo.START_YEAR}}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{myinfo.EMAIL}}</td>
+          </tr>
+          <tr>
+            <td>Grupa</td>
+            <td>{{myinfo.GROUP}}</td>
+          </tr>
+          <tr>
+            <td>O sobie...</td>
+            <td>{{myinfo.INFO}}</td>
+          </tr>          
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
+  </div>
+</div>

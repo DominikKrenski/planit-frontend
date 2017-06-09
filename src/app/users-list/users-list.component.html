@@ -1,21 +1,83 @@
 <div class="container">
-  <div class="col-md-12">
-    {{currentUser}}
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <h3 class="headline text-md-center">Lista wszystkich użytkowników</h3>
     <table class="table">
       <tr>
         <th>Numer indeksu</th>
-        <th>Imię</th>
+        <th>Login</th>
         <th>Rola</th>
+        <th></th>
       </tr>
-      <tr *ngFor="let user of users">
-        <td>{{user.INDEX_NUMBER}}</td>
-        <td>{{user.LOGIN}}</td>
-        <td>
-          <span *ngFor="let role of user.ROLES">
-              {{role.NAME}}<br />
-          </span>
-        </td>
-      </tr>
+      <tbody *ngFor="let user of users">
+        <tr>
+          <td>{{user.INDEX_NUMBER}}</td>
+          <td>{{user.LOGIN}}</td>
+          <td class="roles">
+            <span *ngFor="let role of user.ROLES">
+                <span *ngIf="role.NAME=='ROLE_STUDENT'">Student</span>
+                <span *ngIf="role.NAME=='ROLE_ADMIN'">Administrator</span>
+            </span>
+          </td>
+          <td>
+            <span class="add-info" (click)="info = user.ID">i</span>
+            <span class="remove-info" (click)="removeUser(user)">x</span>
+          </td>
+        </tr>
+        <tr *ngIf="info === user.ID">
+          <td colspan="4">
+            <div class="col-md-2 col-sm-12 col-xs-12">
+              <img src="../assets/images/sample_user.png" class="img-fluid">
+            </div>
+            <div class="col-md-5 col-sm-12 col-xs-12">
+              <table class="table table-user-info">
+                <tr>
+                  <td><span class="label-for-uerinfo">Imię</span></td>
+                  <td>{{user.NAME}}</td>
+                </tr>
+                <tr>
+                  <td><span class="label-for-uerinfo">Nazwisko</span></td>
+                  <td>{{user.SURNAME}}</td>
+                </tr>
+                <tr>
+                  <td><span class="label-for-uerinfo">Rok rozpoczęcia</span></td>
+                  <td>{{user.START_YEAR}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-5 col-sm-12 col-xs-12">
+              <table class="table table-user-info">
+                <tr>
+                  <td><span class="label-for-uerinfo">Email</span></td>
+                  <td>{{user.EMAIL}}</td>
+                </tr>
+                <tr>
+                  <td><span class="label-for-uerinfo">Grupa</span></td>
+                  <td>{{user.GROUP}}</td>
+                </tr>
+                <tr>
+                  <td><span class="label-for-uerinfo">O sobie...</span></td>
+                  <td>{{user.INFO}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="offset-md-2 col-md-10 col-sm-12 col-xs-12">
+              <div *ngIf="!isAdmin(user.ROLES)" class="text-xs-center">
+                <button class="btn btn-default" (click)="grantToAdmin(user)">
+                  Dodaj rolę Administatora
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
   </div>
 </div>

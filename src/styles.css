@@ -104,7 +104,7 @@ a.custom-link:hover, a.custom-link:focus, a.custom-link:active {
   max-width: 70px; 
 }
 #top-bar .btn {
-  font-size: 22px; 
+  font-size: 20px; 
 }
 #top-bar .menu {
   float: right;
@@ -122,7 +122,7 @@ a.custom-link:hover, a.custom-link:focus, a.custom-link:active {
 }
 #top-bar .menu ul li a {
   display: inline-block;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 300;
   color: #5c5c5c;
   padding: 5px 15px;

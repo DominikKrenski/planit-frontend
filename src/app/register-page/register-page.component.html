@@ -1,0 +1,164 @@
+<div id="content" class="clearfix">
+    <div class="container">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm)">
+              <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Błąd!</strong> Podałeś błędne dane do rejestracji.
+              </div>
+              <div class="row">
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Login</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="username" 
+                          placeholder="Login" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.login"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Hasło</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="password" 
+                          class="form-control" 
+                          name="password" 
+                          placeholder="Password"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.password"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Powtórz hasło</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="password" 
+                          class="form-control" 
+                          name="repeated_password" 
+                          placeholder="Password"
+                          class="form-control"
+                          [(ngModel)]="userForm.repeated_password"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Numer indeksu</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="index_number" 
+                          placeholder="100000" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.index_number"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Email</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="email" 
+                          placeholder="jan.kowalski@planit.ovh" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.email"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Imię</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="name" 
+                          placeholder="Jan" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.name"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Nazwisko</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="surname" 
+                          placeholder="Kowalski" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.surname"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Rok rozpoczęcia</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="start_year" 
+                          placeholder="2014" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.start_year"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">Grupa</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="group" 
+                          placeholder="2" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.group"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-xs-2 control-label">O mnie...</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="info" 
+                          placeholder="Lubię koty" 
+                          required="required"
+                          #loginRef="ngModel"
+                          [(ngModel)]="userForm.info"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <div class="col-xs-offset-2 col-xs-12 text-xs-right">
+                    <button 
+                        type="submit" 
+                        class="btn btn-default"
+                    >Zarejestruj się</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+<button class="btn btn-default" (click)="save(true, userForm2)">
+    sample button with custom data (err 500 from api)
+</button>

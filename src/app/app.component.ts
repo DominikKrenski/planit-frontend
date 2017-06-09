@@ -3,6 +3,11 @@ import { Http } from '@angular/http';
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import {
+  CanActivate, Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+ } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +15,8 @@ import 'rxjs/Rx';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -23,6 +30,7 @@ export class AppComponent {
 
     if(getAuth()) {
       localStorage.removeItem('currentUser');
+      this.router.navigate(['/']);
       location.reload();
     }
   }

@@ -22,15 +22,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     function getAuth() {
         return JSON.parse(localStorage.getItem('currentUser'));
-    };
-
-    function getListOfUsers() {
-      console.log('mam token');
-    };
-
-    if(getAuth()) {
-      getListOfUsers();
-    }
+    };    
   }
 
   formSubmit = 0;

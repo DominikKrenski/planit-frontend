@@ -1,0 +1,8 @@
+table.about-me-table td {
+    border-top: 0;
+    border-bottom: 1px dashed #d8d8d8;
+}
+.my-image img {
+    width: 150px;
+    height: auto;
+}

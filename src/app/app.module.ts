@@ -12,17 +12,22 @@ import { CalendarListComponent } from './calendar-list/calendar-list.component';
 import { EventsListComponent } from './events-list/events-list.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { RegisterPageComponent } from './register-page/register-page.component'
+import { MyAccountComponent } from './my-account/my-account.component';
 
-import { UsersService } from './users-list/users.service'
+import { UsersService } from './users-list/users.service';
+import { AccountService } from './my-account/account.service';
 
 const routesConfig:Routes = [
   {path:'', redirectTo: 'frontpage', pathMatch:'full'},
   {path:'login', component: LoginPageComponent},
+  {path:'register', component: RegisterPageComponent},
   {path:'frontpage', component: FrontPageComponent},
   {path:'users', component: UsersListComponent},
   {path:'calendar', component: CalendarListComponent},
   {path:'events', component: EventsListComponent},
   {path:'tags', component: TagsListComponent},
+  {path:'my-account', component: MyAccountComponent},
 ]
 
 const routerModule = RouterModule.forRoot(routesConfig,{
@@ -37,7 +42,9 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     CalendarListComponent,
     EventsListComponent,
     LoginPageComponent,
-    UsersListComponent
+    UsersListComponent,
+    RegisterPageComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     routerModule
   ],
   providers: [
-    UsersService
+    UsersService,
+    AccountService
   ],
   bootstrap: [AppComponent]
 })
