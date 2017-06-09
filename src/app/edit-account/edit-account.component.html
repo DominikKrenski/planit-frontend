@@ -1,3 +1,137 @@
-<p>
-  edit-account works!
-</p>
+<div class="container">
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <div class="row">
+      <div class="col-md-4 col-sm-8 col-xs-12">
+        <div class="my-image text-xs-center">
+          <img src="../assets/images/sample_user.png">
+        </div>
+        <div>
+          <ul class="action-list">
+            <li>
+              <a href="/my-account">O mnie</a>
+            </li>
+            <li>
+              <a href="/change-password">Zmiana hasła</a>
+            </li>
+            <li>
+              <a href="/edit-account">Edycja profilu</a>              
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 col-sm-12 col-xs-12">
+        <h3 class="headline text-md-center">Edycja profilu</h3>
+        <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm)">
+              <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Błąd!</strong> Podałeś błędne dane.
+              </div>
+              <div class="alert alert-success alert-dismissible" *ngIf="formSubmit==2">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Brawo!</strong> Twoje hasło zostało zmienione.
+              </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">Imię</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="NAME" 
+                          placeholder="Imię"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.NAME"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">Nazwisko</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="SURNAME" 
+                          placeholder="Nazwisko"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.SURNAME"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">Email</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="email" 
+                          class="form-control" 
+                          name="EMAIL" 
+                          placeholder="jan.kowalski@student.pg.gda.pl"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.EMAIL"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">Numer indeksu</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="password" 
+                          class="form-control" 
+                          name="INDEX_NUMBER" 
+                          placeholder="100000"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.INDEX_NUMBER"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">Rok rozpoczęcia</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="password" 
+                          class="form-control" 
+                          name="START_YEAR" 
+                          placeholder="2014"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.START_YEAR"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <label for="inputPassword" class="col-xs-2 control-label">O mnie...</label>
+                  <div class="col-xs-10">
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="INFO" 
+                          placeholder="Lubię koty"
+                          class="form-control"
+                          #passwordRef="ngModel"
+                          [(ngModel)]="userForm.INFO"
+                      >
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <div class="col-xs-offset-2 col-xs-12 text-xs-right">
+                    <button 
+                        type="submit" 
+                        class="btn btn-default"
+                    >Zatwierdź zmiany</button>
+                  </div>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
+  </div>
+</div>
