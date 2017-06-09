@@ -28,43 +28,25 @@ export class RegisterPageComponent implements OnInit {
   formSubmit = 0;
 
   userForm = {
-    "login": "",
-    "password": "",
-    "repeated_password":"",
-    "index_number": "",
-    "email": "",
-    "name": "",
-    "surname": "",
-    "start_year": "",
-    "group": "",
-    "info": ""
-  };
-
-  userForm2 = {
-    "ROLES": [
-      {
-        "ID": 2,
-        "NAME": "ROLE_STUDENT"
-      }
-    ],
-    "ID": 5,
-    "LOGIN": "Magdalena",
-    "PASSWORD": "asdfASDF1234!@#$",
-    "REPEATED_PASSWORD": "asdfASDF1234!@#$",
-    "NAME": "Magda",
-    "SURNAME": "Mrzyglocka",
-    "EMAIL": "magmrzyg@student.pg.gda.pl",
-    "GROUP": "2",
-    "INDEX_NUMBER": 158068,
-    "START_YEAR": 2014,
-    "INFO": "Lubię koty"
+    "LOGIN": "",
+    "PASSWORD": "",
+    "REPEATED_PASSWORD":"",
+    "NAME": "",
+    "SURNAME": "",
+    "EMAIL": "",
+    "GROUP": "",
+    "INDEX_NUMBER": "",    
+    "START_YEAR": "",
+    "INFO": ""
   };
 
   server = 'http://planit-backend.com:8888/api/user/register';
 
   save(valid, userForm) {
-    console.log(userForm);
     if (valid) {
+      userForm.INDEX_NUMBER = parseInt(userForm.INDEX_NUMBER, 10);
+      userForm.START_YEAR = parseInt(userForm.START_YEAR, 10);
+
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
@@ -74,34 +56,44 @@ export class RegisterPageComponent implements OnInit {
       return this.http.post(this.server, userForm, options)
         .subscribe( 
           (res) => {
-            console.log('ok');
+            this.formSubmit = 2;
+            this.userForm.LOGIN = '';
+            this.userForm.PASSWORD = '';
+            this.userForm.REPEATED_PASSWORD = '';            
+            this.userForm.INDEX_NUMBER = '';
+            this.userForm.EMAIL = '';
+            this.userForm.NAME = '';
+            this.userForm.SURNAME = '';
+            this.userForm.START_YEAR = '';
+            this.userForm.GROUP = '';
+            this.userForm.INFO = '';
           },
           err => {
             this.formSubmit = 1;
-            this.userForm.login = '';
-            this.userForm.password = '';
-            this.userForm.repeated_password = '';            
-            this.userForm.index_number = '';
-            this.userForm.email = '';
-            this.userForm.name = '';
-            this.userForm.surname = '';
-            this.userForm.start_year = '';
-            this.userForm.group = '';
-            this.userForm.info = '';
+            this.userForm.LOGIN = '';
+            this.userForm.PASSWORD = '';
+            this.userForm.REPEATED_PASSWORD = '';            
+            this.userForm.INDEX_NUMBER = '';
+            this.userForm.EMAIL = '';
+            this.userForm.NAME = '';
+            this.userForm.SURNAME = '';
+            this.userForm.START_YEAR = '';
+            this.userForm.GROUP = '';
+            this.userForm.INFO = '';
           }
       );
     } else {
       this.formSubmit = 1;
-      this.userForm.login = '';
-      this.userForm.password = '';
-      this.userForm.repeated_password = '';  
-      this.userForm.index_number = '';
-      this.userForm.email = '';
-      this.userForm.name = '';
-      this.userForm.surname = '';
-      this.userForm.start_year = '';
-      this.userForm.group = '';
-      this.userForm.info = '';
+      this.userForm.LOGIN = '';
+      this.userForm.PASSWORD = '';
+      this.userForm.REPEATED_PASSWORD = '';            
+      this.userForm.INDEX_NUMBER = '';
+      this.userForm.EMAIL = '';
+      this.userForm.NAME = '';
+      this.userForm.SURNAME = '';
+      this.userForm.START_YEAR = '';
+      this.userForm.GROUP = '';
+      this.userForm.INFO = '';
       return;
     }
   }

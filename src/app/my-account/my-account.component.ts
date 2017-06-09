@@ -24,7 +24,6 @@ export class MyAccountComponent implements OnInit {
     if(this.getAuth()) {
       this.accountService.getUserInfo((myinfo)=>{
         this.myinfo = myinfo;
-        console.log(this.myinfo);
       });
     }  
   }

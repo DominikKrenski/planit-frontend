@@ -6,6 +6,10 @@
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Błąd!</strong> Podałeś błędne dane do rejestracji.
               </div>
+              <div class="alert alert-success alert-dismissible" *ngIf="formSubmit==2">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Brawo!</strong> Rejestracja przebiegła poprawnie. Możesz już zalogować się do swojego konta.
+              </div>
               <div class="row">
                 <div class="form-group clearfix">
                   <label class="col-xs-2 control-label">Login</label>
@@ -17,7 +21,7 @@
                           placeholder="Login" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.login"
+                          [(ngModel)]="userForm.LOGIN"
                       >
                   </div>
                 </div>
@@ -31,7 +35,7 @@
                           placeholder="Password"
                           class="form-control"
                           #passwordRef="ngModel"
-                          [(ngModel)]="userForm.password"
+                          [(ngModel)]="userForm.PASSWORD"
                       >
                   </div>
                 </div>
@@ -44,7 +48,7 @@
                           name="repeated_password" 
                           placeholder="Password"
                           class="form-control"
-                          [(ngModel)]="userForm.repeated_password"
+                          [(ngModel)]="userForm.REPEATED_PASSWORD"
                       >
                   </div>
                 </div>
@@ -58,7 +62,7 @@
                           placeholder="100000" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.index_number"
+                          [(ngModel)]="userForm.INDEX_NUMBER"
                       >
                   </div>
                 </div>
@@ -72,7 +76,7 @@
                           placeholder="jan.kowalski@planit.ovh" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.email"
+                          [(ngModel)]="userForm.EMAIL"
                       >
                   </div>
                 </div>
@@ -86,7 +90,7 @@
                           placeholder="Jan" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.name"
+                          [(ngModel)]="userForm.NAME"
                       >
                   </div>
                 </div>
@@ -100,7 +104,7 @@
                           placeholder="Kowalski" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.surname"
+                          [(ngModel)]="userForm.SURNAME"
                       >
                   </div>
                 </div>
@@ -114,7 +118,7 @@
                           placeholder="2014" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.start_year"
+                          [(ngModel)]="userForm.START_YEAR"
                       >
                   </div>
                 </div>
@@ -128,7 +132,7 @@
                           placeholder="2" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.group"
+                          [(ngModel)]="userForm.GROUP"
                       >
                   </div>
                 </div>
@@ -142,7 +146,7 @@
                           placeholder="Lubię koty" 
                           required="required"
                           #loginRef="ngModel"
-                          [(ngModel)]="userForm.info"
+                          [(ngModel)]="userForm.INFO"
                       >
                   </div>
                 </div>
@@ -159,6 +163,3 @@
         </div>
     </div>
 </div>
-<button class="btn btn-default" (click)="save(true, userForm2)">
-    sample button with custom data (err 500 from api)
-</button>
