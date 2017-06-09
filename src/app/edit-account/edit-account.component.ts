@@ -19,7 +19,6 @@ export class EditAccountComponent implements OnInit {
 
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
-  myinfo = {}
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
@@ -37,10 +36,46 @@ export class EditAccountComponent implements OnInit {
   formSubmit = 0;
 
   userForm = {
-  };
-  
+    "LOGIN": "",
+    "PASSWORD": "",
+    "NAME": "",
+    "SURNAME": "",
+    "EMAIL": "",
+    "GROUP": "",
+    "INDEX_NUMBER": 0,
+    "START_YEAR": 0,
+    "INFO": ""
+  };  
+
+  server = 'http://planit-backend.com:8888/api/user/update';
 
   save(valid, userForm) {
     
+    if (valid) {
+      userForm.INDEX_NUMBER = parseInt(userForm.INDEX_NUMBER, 10);
+      userForm.START_YEAR = parseInt(userForm.START_YEAR, 10);
+
+      let authToken = localStorage.getItem('currentUser');    
+      let token = JSON.parse(authToken);
+      let headers = new Headers();
+          headers.append('Authorization', `${token.authorization}`);
+          headers.append('Accept', 'application/json');
+          headers.append('Content-Type', 'application/json');
+
+      let options = new RequestOptions({ headers: headers });
+
+      return this.http.put(this.server, userForm, options)
+        .subscribe( 
+          (res) => {
+            this.formSubmit = 2;
+          },
+          err => {
+            this.formSubmit = 1;
+          }
+      );
+    } else {
+      this.formSubmit = 1;
+      return;
+    }
   }
 }
