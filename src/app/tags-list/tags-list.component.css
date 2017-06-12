@@ -1,0 +1,61 @@
+.roles span + span:before {
+    content: ",";
+}
+.add-info {
+    border-radius: 50%;
+    border: 1px solid #6dabbf;
+    color: #6dabbf;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+.success-info {
+    border-radius: 50%;
+    border: 1px solid #689600;
+    color: #689600;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+.success-info:before {content:'\2713';}
+.remove-info {
+    border-radius: 50%;
+    border: 1px solid #e40404;
+    color: #e40404;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+.table tbody + tbody {
+    border-top: 0;
+}
+.table.table-user-info td  {
+    border-top: 0;
+    border-bottom: 1px dashed #d8d8d8;
+}
+.add-tag-input {
+    width: 200px;
+    display: inline-block;
+    height: 32px;
+    position: relative;
+    top: 1px;
+}
+.edit-tag {
+    height: 25px;
+}
+.yes {
+    color: #689600;
+}
+.no {
+    color: #e40404;
+    cursor: pointer;
+}
+.no:hover  {
+    text-decoration: underline;
+}

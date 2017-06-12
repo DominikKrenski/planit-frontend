@@ -18,23 +18,8 @@ import 'rxjs/Rx';
 export class EditAccountComponent implements OnInit {
 
   currentUser = "";
+  myInfo = {};
   authToken = localStorage.getItem('currentUser');
-
-  getAuth() {
-      return JSON.parse(localStorage.getItem('currentUser'));
-  }; 
-  constructor(private http:Http, private router: Router) {
-    this.currentUser = this.getAuth();
-  }
-
-  ngOnInit() {
-    function getAuth() {
-        return JSON.parse(localStorage.getItem('currentUser'));
-    };    
-  }
-
-  formSubmit = 0;
-
   userForm = {
     "LOGIN": "",
     "PASSWORD": "",
@@ -46,6 +31,55 @@ export class EditAccountComponent implements OnInit {
     "START_YEAR": 0,
     "INFO": ""
   };  
+
+  getAuth() {
+      return JSON.parse(localStorage.getItem('currentUser'));
+  }; 
+  serverUser ="";
+  getUser() {
+    this.serverUser = 'http://planit-backend.com:8888/api/user/update';
+
+    let authToken = localStorage.getItem('currentUser');    
+    let token = JSON.parse(authToken);
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+      return this.http.get(this.serverUser, options)
+        .subscribe( 
+          (res) => {
+            let data = res.json();
+            this.myInfo = data;
+            this.userForm.LOGIN = this.myInfo['LOGIN'];
+            this.userForm.NAME = this.myInfo['NAME'];
+            this.userForm.SURNAME = this.myInfo['SURNAME'];
+            this.userForm.EMAIL = this.myInfo['EMAIL'];
+            this.userForm.GROUP = this.myInfo['GROUP'];
+            this.userForm.INDEX_NUMBER = this.myInfo['INDEX_NUMBER'];
+            this.userForm.START_YEAR = this.myInfo['START_YEAR'];
+            this.userForm.INFO = this.myInfo['INFO'];
+          },
+          err => {
+            this.formSubmit = 1;
+          }
+      );
+  }
+
+  constructor(private http:Http, private router: Router) {
+    this.currentUser = this.getAuth();
+  }
+
+  ngOnInit() {
+    function getAuth() {
+        return JSON.parse(localStorage.getItem('currentUser'));
+    };  
+    this.getUser();
+  }
+
+  formSubmit = 0;
 
   server = 'http://planit-backend.com:8888/api/user/update';
 

@@ -19,6 +19,7 @@ import { EditAccountComponent } from './edit-account/edit-account.component';
 
 import { UsersService } from './users-list/users.service';
 import { AccountService } from './my-account/account.service';
+import { TagsService } from './tags-list/tags.service';
 
 const routesConfig:Routes = [
   {path:'', redirectTo: 'frontpage', pathMatch:'full'},
@@ -60,7 +61,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
   ],
   providers: [
     UsersService,
-    AccountService
+    AccountService,
+    TagsService
   ],
   bootstrap: [AppComponent]
 })
