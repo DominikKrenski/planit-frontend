@@ -51,11 +51,13 @@
 }
 .yes {
     color: #689600;
+    cursor: pointer;
 }
 .no {
     color: #e40404;
     cursor: pointer;
 }
-.no:hover  {
+.no:hover,
+.yes:hover  {
     text-decoration: underline;
 }

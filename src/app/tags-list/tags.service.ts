@@ -109,4 +109,48 @@ export class TagsService {
   acceptTag(tag) {
     this.acceptThisTag(tag);
   }
+
+  rejectThisTag(tag) {
+    let url = `http://planit-backend.com:8888/api/tag/reject/` + tag;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.put(url, tag, options).subscribe((response:Response)=>{
+      let data = response.json();
+    });
+  }
+
+  rejectTag(tag) {
+    this.rejectThisTag(tag);
+  }
+
+  editThisTag(tagInfo) {
+    let url = `http://planit-backend.com:8888/api/tag/edit/` + tagInfo.ID;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.put(url, tagInfo, options).subscribe((response:Response)=>{
+      let data = response.json();
+    });
+  }
+
+  editTag(tagInfo) {
+    this.editThisTag(tagInfo);
+  }
 }

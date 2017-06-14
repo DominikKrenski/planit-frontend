@@ -65,8 +65,17 @@ export class TagsListComponent implements OnInit {
       this.tagsService.acceptTag(tag.NAME);
       tag.IS_ACCEPTED = true;
   }
+  rejectTag(tag) {
+      this.tagsService.rejectTag(tag.NAME);
+      tag.IS_ACCEPTED = false;
+  }
   changeName(name, tag) {
-    // dorobić do api edit name
+    var tagInfo = {
+      ID: tag.ID,
+      NAME: name,
+      IS_ACCEPTED: tag.IS_ACCEPTED
+    }
+    this.tagsService.editTag(tagInfo);
     tag.NAME = name;
   }
 }

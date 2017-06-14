@@ -24,7 +24,7 @@
             <input *ngIf="info === tag.NAME" class="form-control edit-tag" [(ngModel)]="newName" />
           </td>
           <td class="text-xs-center">
-            <span *ngIf="tag.IS_ACCEPTED==true" class="yes">TAK</span>
+            <span *ngIf="tag.IS_ACCEPTED==true" class="yes" (click)="rejectTag(tag)">TAK</span>
             <span *ngIf="tag.IS_ACCEPTED==false" class="no" (click)="acceptTag(tag)" >NIE</span>
           </td>
           <td>
