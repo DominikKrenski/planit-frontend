@@ -1,3 +1,155 @@
-<p>
-  events-list works!
-</p>
+<div class="container">
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <div class="row">
+      <div class="col-md-3">
+        <button 
+            class="btn btn-default"
+            (click)="toggleCreate=!toggleCreate"
+            *ngIf="!toggleCreate"
+        >Nowe wydarzenie +</button>
+      </div>
+      <div class="col-md-9">
+        <div class="text-xs-right">
+          <button 
+              class="btn btn-default"
+              (click)="toggleCreate=!toggleCreate"
+              *ngIf="toggleCreate"
+          >Anuluj</button>
+          <button 
+              class="btn btn-default light-button"
+              (click)="getArchiveEvents()"
+              *ngIf="!toggleCreate"
+          >Archiwum wydarzeń</button>
+          <button 
+              class="btn btn-default light-button"
+              (click)="getPastEvents()"
+              *ngIf="!toggleCreate"
+          >Przeszłe wydarzenia</button>
+          <button 
+              class="btn btn-default light-button"
+              (click)="getActiveEvents()"
+              *ngIf="!toggleCreate"
+          >Aktualne wydarzenia</button>
+      </div>
+      </div>
+    </div>
+    
+    <br />
+    
+    <div *ngIf="toggleCreate">
+      <br />
+      <form #formRef="ngForm" novalidate="true" (ngSubmit)="newEvent(formRef.valid, createEvent)">
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Nazwa</label>
+          <div class="col-xs-10">
+              <input type="text" class="form-control" name="eventname" [(ngModel)]="createEvent.NAME" />
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Miejsce</label>
+          <div class="col-xs-10">
+              <input type="text" class="form-control" name="eventplace" [(ngModel)]="createEvent.PLACE" />
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Typ</label>
+          <div class="col-xs-10">
+              <select class="form-control" [(ngModel)]="createEvent.TYPE" name="eventtype" >
+                <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>                
+              </select>
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Data eventu</label>
+          <div class="col-xs-10">
+              <input type="text" class="form-control" name="eventdate" [(ngModel)]="createEvent.START_DATE" />
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Godzina rozpoczęcia</label>
+          <div class="col-xs-10">
+              <input type="text" class="form-control" name="eventhourstart" [(ngModel)]="createEvent.START_HOUR" />
+          </div>
+        </div>
+        <div class="form-group clearfix">
+          <label class="col-xs-2 control-label">Godzina zakończenia</label>
+          <div class="col-xs-10">
+              <input type="text" class="form-control" name="eventhourend" [(ngModel)]="createEvent.END_HOUR" />
+          </div>
+        </div>
+        <button 
+            type="submit" 
+            class="btn btn-default"
+        >Dodaj nowe wydarzenie</button>
+      </form>
+      <br />
+    </div>
+    <div *ngIf="!toggleCreate" class="typesLegend">
+      <div>
+        <div class="dot laboratorium-dot"></div>
+        <div>Laboratorium</div>
+      </div>
+      <div>
+        <div class="dot cwiczenia-dot"></div>
+        <div>Ćwiczenia</div>
+      </div>
+      <div>
+        <div class="dot projekt-dot"></div>
+        <div>Projekt</div>
+      </div>
+      <div>
+        <div class="dot zaliczenie-dot"></div>
+        <div>Zaliczenie</div>
+      </div>
+      <div>
+        <div class="dot wyklady-dot"></div>
+        <div>Wykłady</div>
+      </div>
+      <div>
+        <div class="dot inne-dot"></div>
+        <div>Inne</div>
+      </div>
+    </div>
+    <br />
+    <h3 class="headline text-md-center" *ngIf="toggleActive && !toggleCreate">Lista aktualnych wydarzeń</h3>
+    <h3 class="headline text-md-center" *ngIf="toggleArchive && !toggleCreate">Lista archiwalnych wydarzeń</h3>
+    <h3 class="headline text-md-center" *ngIf="togglePast && !toggleCreate">Lista przeszłych wydarzeń</h3>
+    <table class="table" *ngIf="!toggleCreate">
+      <tbody *ngFor="let event of events">
+        <tr>
+          <td>
+            <div *ngIf="event.TYPE=='Laboratorium'" class="dot laboratorium-dot"></div>
+            <div *ngIf="event.TYPE=='Ćwiczenia'" class="dot cwiczenia-dot"></div>
+            <div *ngIf="event.TYPE=='Projekt'" class="dot projekt-dot"></div>
+            <div *ngIf="event.TYPE=='Zaliczenie'" class="dot zaliczenie-dot"></div>
+            <div *ngIf="event.TYPE=='Wykłady'" class="dot wyklady-dot"></div>
+            <div *ngIf="event.TYPE=='Inne'" class="dot inne-dot"></div>
+          </td>
+          <td>
+            <span>{{event.NAME}}</span>
+          </td>
+          <td>
+            <span>{{event.PLACE}}</span>
+          </td>
+          <td>
+            <span>{{event.START_DATE}}</span>
+          </td>
+          <td>
+            <span>{{event.START_HOUR}} - {{event.END_HOUR}}</span>
+          </td>
+          <td *ngIf="!toggleArchive">
+            <span class="yes" (click)="archiveEvent(event)">Zarchiwizuj</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
+  </div>
+</div>
