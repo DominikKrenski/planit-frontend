@@ -36,59 +36,131 @@
       </div>
     </div>
     <br /><br />
+    <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm, event)">
+    <div class="text-xs-right">
+      <span class="btn btn-default" (click)="editToggle=!editToggle">Edytuj wydarzenie</span>
+    </div>
+    <br />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Nazwa:</b>
       </div>
       <div class="col-md-8">
-        {{event.NAME}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.NAME}}</span>
+        <span *ngIf="editToggle">
+          <input 
+              type="text" 
+              class="form-control" 
+              name="NAME"
+              class="form-control"
+              #passwordRef="ngModel"
+              [(ngModel)]="userForm.NAME"
+          >
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Miejsce:</b>
       </div>
       <div class="col-md-8">
-        {{event.PLACE}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.PLACE}}</span>
+        <span *ngIf="editToggle">
+          <input 
+              type="text" 
+              class="form-control" 
+              name="PLACE"
+              class="form-control"
+              #passwordRef="ngModel"
+              [(ngModel)]="userForm.PLACE"
+          >
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Typ:</b>
       </div>
       <div class="col-md-8">
-        {{event.TYPE}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.TYPE}}</span>
+        <span *ngIf="editToggle">
+          <select class="form-control" [(ngModel)]="userForm.TYPE" name="TYPE" >
+                <option *ngFor="let category of categories" [value]="category.name" [selected]="event.TYPE">{{category.name}}</option>                
+            </select>
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Data:</b>
       </div>
       <div class="col-md-8">
-        {{event.START_DATE}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.START_DATE}}</span>
+        <span *ngIf="editToggle">
+          <input 
+              type="text" 
+              class="form-control" 
+              name="START_DATE"
+              class="form-control"
+              #passwordRef="ngModel"
+              [(ngModel)]="userForm.START_DATE"
+          >
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Godzina rozpoczęcia:</b>
       </div>
       <div class="col-md-8">
-        {{event.START_HOUR}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.START_HOUR}}</span>
+        <span *ngIf="editToggle">
+          <input 
+              type="text" 
+              class="form-control" 
+              name="START_HOUR"
+              class="form-control"
+              #passwordRef="ngModel"
+              [(ngModel)]="userForm.START_HOUR"
+          >
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 padding-top-bottom">
         <b>Godzina zakończenia:</b>
       </div>
       <div class="col-md-8">
-        {{event.END_HOUR}}
+        <span *ngIf="!editToggle" class="padding-top-bottom">{{event.END_HOUR}}</span>
+        <span *ngIf="editToggle">
+          <input 
+              type="text" 
+              class="form-control" 
+              name="END_HOUR"
+              class="form-control"
+              #passwordRef="ngModel"
+              [(ngModel)]="userForm.END_HOUR"
+          >
+        </span>
       </div>
     </div>
+    <div *ngIf="editToggle" class="row">
+      <div class="col-md-12 text-xs-right">
+        <div class="form-group clearfix">
+          <br />
+            <button 
+                type="submit" 
+                class="btn btn-default"
+            >Zatwierdź zmiany</button>
+          </div>           
+      </div>
+    </div>
+    </form>
     <hr class="dashed-hr" />
     <br />
     <br />

@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { EventDetailService } from './event-detail.service'
 import { ActivatedRoute } from '@angular/router';
+import { Http } from '@angular/http';
+import {
+  CanActivate, Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+ } from '@angular/router';
+
+import { Subject, Observable } from 'rxjs';
+import { Headers, RequestOptions } from '@angular/http';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'event-details',
@@ -12,12 +22,32 @@ export class EventDetailsComponent implements OnInit {
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
   event = {};
+  userForm = {
+    "NAME": "",
+    "PLACE": "",
+    "TYPE": "",
+    "START_DATE": "",
+    "START_HOUR": "",
+    "END_HOUR": "",
+    "IS_PRIVATE": false,
+    "IS_IMPORTANT": false
+  }; 
+  categories = [
+    {name: 'Laboratorium'},
+    {name: 'Ćwiczenia'},
+    {name: 'Projekt'},
+    {name: 'Zaliczenie'},
+    {name: 'Wykłady'},
+    {name: 'Inne'}
+  ];
+
+  server = '';
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private eventDetailService:EventDetailService, private activatedRoute:ActivatedRoute) {
+  constructor(private eventDetailService:EventDetailService, private activatedRoute:ActivatedRoute, private http:Http) {
     this.currentUser = this.getAuth();
   }
 
@@ -45,8 +75,17 @@ export class EventDetailsComponent implements OnInit {
        this.eventDetailService.getEvents(eventid, (events)=>{
         this.event = events;
         this.getTags(this.event);
+        this.userForm.NAME = this.event['NAME'];
+        this.userForm.PLACE = this.event['PLACE'];
+        this.userForm.TYPE = this.event['TYPE'];
+        this.userForm.START_DATE = this.event['START_DATE'];
+        this.userForm.START_HOUR = this.event['START_HOUR'];
+        this.userForm.END_HOUR = this.event['END_HOUR'];
+        this.userForm.IS_PRIVATE = this.event['IS_PRIVATE'];
+        this.userForm.IS_IMPORTANT = this.event['IS_IMPORTANT'];
       });
     }
+    this.server = 'http://planit-backend.com:8888/api/event/' + eventid;
   };
   
   acceptEvent(event) {
@@ -167,4 +206,44 @@ export class EventDetailsComponent implements OnInit {
       this.tags[i].checked = false;
     }
   }
+  
+  editToggle = false;
+  formSubmit = 0;
+
+  
+
+  save(valid, userForm, event) {
+    
+    if (valid) {
+      let authToken = localStorage.getItem('currentUser');    
+      let token = JSON.parse(authToken);
+      let headers = new Headers();
+          headers.append('Authorization', `${token.authorization}`);
+          headers.append('Accept', 'application/json');
+          headers.append('Content-Type', 'application/json');
+
+      let options = new RequestOptions({ headers: headers });
+
+      return this.http.put(this.server, userForm, options)
+        .subscribe( 
+          (res) => {
+            this.editToggle = false;
+            event.NAME = userForm.NAME;
+            event.PLACE = userForm.PLACE;
+            event.TYPE = userForm.TYPE;
+            event.START_DATE = userForm.START_DATE;
+            event.START_HOUR = userForm.START_HOUR;
+            event.END_HOUR = userForm.END_HOUR;
+            this.formSubmit = 2;
+          },
+          err => {
+            this.formSubmit = 1;
+          }
+      );
+    } else {
+      this.formSubmit = 1;
+      return;
+    }
+  }
+
 }
