@@ -21,6 +21,7 @@ export class EditAccountComponent implements OnInit {
   myInfo = {};
   authToken = localStorage.getItem('currentUser');
   userForm = {
+    "AVATAR": "",
     "LOGIN": "",
     "PASSWORD": "",
     "NAME": "",
@@ -53,6 +54,7 @@ export class EditAccountComponent implements OnInit {
           (res) => {
             let data = res.json();
             this.myInfo = data;
+            this.userForm.AVATAR = this.myInfo['AVATAR'];
             this.userForm.LOGIN = this.myInfo['LOGIN'];
             this.userForm.NAME = this.myInfo['NAME'];
             this.userForm.SURNAME = this.myInfo['SURNAME'];
@@ -61,6 +63,7 @@ export class EditAccountComponent implements OnInit {
             this.userForm.INDEX_NUMBER = this.myInfo['INDEX_NUMBER'];
             this.userForm.START_YEAR = this.myInfo['START_YEAR'];
             this.userForm.INFO = this.myInfo['INFO'];
+            console.log(this.myInfo);
           },
           err => {
             this.formSubmit = 1;
@@ -84,7 +87,9 @@ export class EditAccountComponent implements OnInit {
   server = 'http://planit-backend.com:8888/api/user/update';
 
   save(valid, userForm) {
-    
+    if(this.base64textString!=null) {
+      userForm.AVATAR = 'data:image/png;base64,'+this.base64textString;
+    }
     if (valid) {
       userForm.INDEX_NUMBER = parseInt(userForm.INDEX_NUMBER, 10);
       userForm.START_YEAR = parseInt(userForm.START_YEAR, 10);
@@ -112,4 +117,25 @@ export class EditAccountComponent implements OnInit {
       return;
     }
   }
+
+  private base64textString:String="";
+  
+  handleFileSelect(evt){
+      var files = evt.target.files;
+      var file = files[0];
+    
+    if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload =this._handleReaderLoaded.bind(this);
+
+        reader.readAsBinaryString(file);
+    }
+  }
+  
+  _handleReaderLoaded(readerEvt) {
+     var binaryString = readerEvt.target.result;
+            this.base64textString= btoa(binaryString);
+            console.log(btoa(binaryString));
+    }
 }

@@ -28,6 +28,7 @@ export class RegisterPageComponent implements OnInit {
   formSubmit = 0;
 
   userForm = {
+    "AVATAR": "",
     "LOGIN": "",
     "PASSWORD": "",
     "REPEATED_PASSWORD":"",
@@ -43,6 +44,9 @@ export class RegisterPageComponent implements OnInit {
   server = 'http://planit-backend.com:8888/api/user/register';
 
   save(valid, userForm) {
+    if(this.base64textString!=null) {
+      userForm.AVATAR = 'data:image/png;base64,'+this.base64textString;
+    }
     if (valid) {
       userForm.INDEX_NUMBER = parseInt(userForm.INDEX_NUMBER, 10);
       userForm.START_YEAR = parseInt(userForm.START_YEAR, 10);
@@ -57,6 +61,7 @@ export class RegisterPageComponent implements OnInit {
         .subscribe( 
           (res) => {
             this.formSubmit = 2;
+            this.userForm.AVATAR = '';
             this.userForm.LOGIN = '';
             this.userForm.PASSWORD = '';
             this.userForm.REPEATED_PASSWORD = '';            
@@ -70,6 +75,7 @@ export class RegisterPageComponent implements OnInit {
           },
           err => {
             this.formSubmit = 1;
+            this.userForm.AVATAR = '';
             this.userForm.LOGIN = '';
             this.userForm.PASSWORD = '';
             this.userForm.REPEATED_PASSWORD = '';            
@@ -84,6 +90,7 @@ export class RegisterPageComponent implements OnInit {
       );
     } else {
       this.formSubmit = 1;
+      this.userForm.AVATAR = '';
       this.userForm.LOGIN = '';
       this.userForm.PASSWORD = '';
       this.userForm.REPEATED_PASSWORD = '';            
@@ -96,5 +103,25 @@ export class RegisterPageComponent implements OnInit {
       this.userForm.INFO = '';
       return;
     }
+  }
+  private base64textString:String="";
+  
+  handleFileSelect(evt){
+      var files = evt.target.files;
+      var file = files[0];
+    
+    if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload =this._handleReaderLoaded.bind(this);
+
+        reader.readAsBinaryString(file);
+    }
+  }
+  
+  _handleReaderLoaded(readerEvt) {
+     var binaryString = readerEvt.target.result;
+          this.base64textString= btoa(binaryString);
+          console.log(btoa(binaryString));
   }
 }

@@ -1,6 +1,12 @@
 <div id="content" class="clearfix">
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="clearfix">
+                    <label for="filePicker" class="col-xs-2">Wczytaj avatar:</label>
+                    <input class="col-xs-10" type="file" id="filePicker" (change)="handleFileSelect($event)">
+                </div>
+            </div>
             <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm)">
               <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
