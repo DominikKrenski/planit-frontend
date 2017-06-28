@@ -1,0 +1,147 @@
+<div class="container">
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <h3 class="headline text-md-center">Informacje o wydarzeniu</h3>
+    <div class="row" *ngIf="event.IS_ARCHIVE == false">
+      <div class="col-md-4">
+        <div class="block-ev yes" *ngIf="event.IS_ACCEPTED == true" (click)="revokeAcceptEvent(event)">
+          Zaakceptowane
+        </div>
+        <div class="block-ev no" *ngIf="event.IS_ACCEPTED == false" (click)="acceptEvent(event)">
+          Zaakceptowane
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="block-ev yes" *ngIf="event.IS_IMPORTANT == true" (click)="revokeImportantEvent(event)">
+          Ważne
+        </div>
+        <div class="block-ev no" *ngIf="event.IS_IMPORTANT == false" (click)="importantEvent(event)">
+          Ważne
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="block-ev yes" *ngIf="event.IS_PRIVATE == true" (click)="revokePrivateEvent(event)">
+          Prywatne
+        </div>
+        <div class="block-ev no" *ngIf="event.IS_PRIVATE == false" (click)="privateEvent(event)">
+          Prywatne
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="event.IS_ARCHIVE == true">
+      <div class="col-md-12">
+        <div class="block-ev yes">
+          Zarchiwizowane
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Nazwa:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.NAME}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Miejsce:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.PLACE}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Typ:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.TYPE}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Data:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.START_DATE}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Godzina rozpoczęcia:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.START_HOUR}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Godzina zakończenia:</b>
+      </div>
+      <div class="col-md-8">
+        {{event.END_HOUR}}
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <br />
+    <br />
+    
+    <h3 class="headline text-md-center">Informacje o tagach</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <b>Lista wszystkich tagów:</b>
+      </div>
+      <div class="col-md-8">
+        <span *ngFor="let tag of event.TAGS" class="tags-list-item">{{tag.NAME}}</span>
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Dodaj tagi do wydarzenia:</b>
+      </div>
+      <div class="col-md-6">
+        <span *ngFor="let option of tags">
+            <input  id="{{option.ID}}" name="Checks" type="checkbox" 
+                    value="{{option.value}}" [(ngModel)]="option.checked" >
+            <label for="{{option.ID}}">{{option.NAME}}</label>
+        </span>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-success full-button" (click)="addTags(event,tags)">Dodaj</button>
+      </div>
+    </div>
+    <hr class="dashed-hr" />
+    <div class="row">
+      <div class="col-md-4">
+        <b>Usuń tagi z wydarzenia:</b>
+      </div>
+      <div class="col-md-6">
+        <span *ngFor="let option of event.TAGS" class="delete-tags">
+            <input  id="{{option.ID}}" name="Checks2" type="checkbox" 
+                    value="{{option.value}}" [(ngModel)]="option.checked" >
+            <label for="{{option.ID}}">{{option.NAME}}</label>
+        </span>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-success full-button" (click)="removeTags(event,tags)">Usuń</button>
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
+  </div>
+</div>

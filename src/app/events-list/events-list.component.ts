@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from './events.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'events-list',
@@ -17,6 +18,9 @@ export class EventsListComponent implements OnInit {
   toggleActive = true;
   toggleArchive = false;
   togglePast = false;  
+  toggleNonAccepted = false;
+  info = '';
+  tags = [];
 
   categories = [
     {name: 'Laboratorium'},
@@ -35,7 +39,7 @@ export class EventsListComponent implements OnInit {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private eventsService:EventsService) {
+  constructor(private eventsService:EventsService, private activatedRoute:ActivatedRoute) {
     this.currentUser = this.getAuth();
   }
 
@@ -44,7 +48,8 @@ export class EventsListComponent implements OnInit {
       this.eventsService.getEvents((events)=>{
         this.events = events;
       });
-    }    
+    }
+    let eventid = this.activatedRoute.snapshot.params['eventid'];
   };
   
   isAdmin(roles) {
@@ -69,6 +74,10 @@ export class EventsListComponent implements OnInit {
     if(valid) {
       this.eventsService.newEvent(createEvent);
       this.toggleCreate = !this.toggleCreate;
+      this.toggleArchive = false;
+      this.toggleActive = false;
+      this.togglePast = false;
+      this.toggleNonAccepted = true;
       this.events.push({
         "NAME": createEvent.NAME,
         "PLACE": createEvent.PLACE,
@@ -84,6 +93,7 @@ export class EventsListComponent implements OnInit {
     this.toggleArchive = true;
     this.toggleActive = false;
     this.togglePast = false;
+    this.toggleNonAccepted = false;
     this.eventsService.getArchiveEvents((events)=>{
         this.events = events;
       });
@@ -92,6 +102,7 @@ export class EventsListComponent implements OnInit {
     this.toggleArchive = false;
     this.toggleActive = true;
     this.togglePast = false;
+    this.toggleNonAccepted = false;
     this.eventsService.getEvents((events)=>{
         this.events = events;
       });
@@ -103,12 +114,111 @@ export class EventsListComponent implements OnInit {
       this.events.splice(index, 1);
     }
   }
-   getPastEvents() {
+  acceptEvent(event) {
+    this.eventsService.acceptEvent(event.ID);
+    var index = this.events.indexOf(event);
+    if (index > -1) {
+      this.events.splice(index, 1);
+    }
+  }
+  getPastEvents() {
     this.toggleArchive = false;
     this.toggleActive = false;
     this.togglePast = true;
+    this.toggleNonAccepted = false;
     this.eventsService.getPastEvents((events)=>{
         this.events = events;
       });
+  }
+  getNonAcceptedEvents() {
+    this.toggleArchive = false;
+    this.toggleActive = false;
+    this.togglePast = false;
+    this.toggleNonAccepted = true;
+    this.eventsService.getNonAcceptedEvents((events)=>{
+        this.events = events;
+      });
+  }
+  getTags(event) {
+    this.eventsService.getTags((tags)=>{
+        this.tags = tags;
+        for (var i = this.tags.length -1; i >= 0; i--) {
+          event.TAGS.forEach(element => {
+            if(this.tags[i]) {
+              if(element.ID == this.tags[i].ID) {
+                var index = i;
+                if (index > -1) {
+                  this.tags.splice(index, 1);
+                }
+              }
+            }
+          });
+        }
+    });
+  }
+  tagsArray = [];
+  eventObject = {
+    id: '',
+    tagsIds: []
+  }
+  currentAddTags = [];
+  addTags(event, tags) {
+    this.tagsArray = [];
+    tags.forEach(element => {
+      if (element.checked == true) {
+        this.tagsArray.push(element.ID);
+      }
+    });
+    this.eventObject = {
+      id: '',
+      tagsIds: []
+    }
+    
+    this.eventObject.id = event.ID;
+    this.eventObject.tagsIds = this.tagsArray;
+
+    this.eventsService.addTagsToEvent(this.eventObject);
+
+    this.tags.forEach(element => {
+      this.eventObject.tagsIds.forEach(el => {
+        if(element.ID == el) {
+          event.TAGS.push(element);
+        }
+      });
+    });
+
+    for (var i = 0; i < this.tags.length; i++) {
+      event.TAGS.forEach(element => {
+        if(element.ID == this.tags[i].ID) {
+          var index = i;
+          if (index > -1) {
+            this.tags.splice(index, 1);
+          }
+        }
+      });
+    }
+  }
+
+  eventObject2 = {
+    id: '',
+    tagNames: []
+  }
+  removeTags(event, tags) {
+    this.tagsArray = [];
+    event.TAGS.forEach(element => {
+      if (element.checked == true) {
+        this.tagsArray.push(element.NAME);
+      }
+    });
+    this.eventObject2 = {
+      id: '',
+      tagNames: []
+    }
+    
+    this.eventObject2.id = event.ID;
+    this.eventObject2.tagNames = this.tagsArray;
+
+    this.eventsService.removeTagsFromEvent(this.eventObject2);
+    
   }
 }

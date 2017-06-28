@@ -57,14 +57,22 @@
 .no {
     color: #e40404;
     cursor: pointer;
+    text-transform: uppercase;
+}
+.open-tags {
+    color: #0076de;
+    cursor: pointer;
+    text-transform: uppercase;
 }
 .no:hover,
-.yes:hover  {
+.yes:hover,
+.open-tags:hover {
     text-decoration: underline;
 }
 .btn.btn-default.light-button {
     background: transparent;
     color: #ff5733; 
+    margin-bottom: 5px;
 }
 .btn.btn-default.light-button:hover {
     background: #ff5733;
@@ -106,4 +114,61 @@
 }
 .typesLegend .dot {
     margin: 5px auto;
+}
+.dashed-hr {
+    border-style: dashed;
+}
+ 
+input[type="checkbox"] {
+    opacity: 0;
+    display: none;
+}
+input[type="checkbox"] + label {
+    cursor: pointer;
+    padding: 4px 10px;
+    border: 1px solid #689600;
+    background: #fff;
+    color: #878787;
+    border-radius: 3px;
+}
+input[type="checkbox"]:checked + label {
+    background: #689600;
+    border: 1px solid #689600;
+    color: white;
+}
+
+.delete-tags input[type="checkbox"] + label {
+    border: 1px solid #e40404;
+}
+.delete-tags input[type="checkbox"]:checked + label {
+    background: #e40404;
+    border: 1px solid #e40404;
+}
+.full-button {
+    width: 100%;
+}
+.tags-list-item {
+    padding: 6px 10px;
+    border: 1px solid #878787;
+    background: #fff;
+    color: #878787;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.tags-list-item + .tags-list-item {
+    margin-left: 5px;
+}
+.event-dot-icons {
+    position: relative;
+}
+.important-icon {
+    position: absolute;
+    top: 0;
+    right: 30px;
+}
+.private-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

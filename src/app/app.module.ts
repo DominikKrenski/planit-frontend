@@ -16,11 +16,13 @@ import { RegisterPageComponent } from './register-page/register-page.component'
 import { MyAccountComponent } from './my-account/my-account.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 import { UsersService } from './users-list/users.service';
 import { AccountService } from './my-account/account.service';
 import { TagsService } from './tags-list/tags.service';
 import { EventsService } from './events-list/events.service';
+import { EventDetailService } from './event-details/event-detail.service';
 
 const routesConfig:Routes = [
   {path:'', redirectTo: 'frontpage', pathMatch:'full'},
@@ -34,6 +36,7 @@ const routesConfig:Routes = [
   {path:'my-account', component: MyAccountComponent},
   {path:'change-password', component: ChangePasswordComponent},
   {path:'edit-account', component: EditAccountComponent},
+  {path:'event-details/:eventid', component: EventDetailsComponent},
 ]
 
 const routerModule = RouterModule.forRoot(routesConfig,{
@@ -52,7 +55,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     RegisterPageComponent,
     MyAccountComponent,
     ChangePasswordComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    EventDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     UsersService,
     AccountService,
     TagsService,
-    EventsService
+    EventsService,
+    EventDetailService
   ],
   bootstrap: [AppComponent]
 })

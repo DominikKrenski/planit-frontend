@@ -20,17 +20,22 @@
               class="btn btn-default light-button"
               (click)="getArchiveEvents()"
               *ngIf="!toggleCreate"
-          >Archiwum wydarzeń</button>
+          >Archiwum</button>
           <button 
               class="btn btn-default light-button"
               (click)="getPastEvents()"
               *ngIf="!toggleCreate"
-          >Przeszłe wydarzenia</button>
+          >Przeszłe</button>
+          <button 
+              class="btn btn-default light-button"
+              (click)="getNonAcceptedEvents()"
+              *ngIf="!toggleCreate"
+          >Niezaakceptowane</button>
           <button 
               class="btn btn-default light-button"
               (click)="getActiveEvents()"
               *ngIf="!toggleCreate"
-          >Aktualne wydarzenia</button>
+          >Aktualne</button>
       </div>
       </div>
     </div>
@@ -115,16 +120,23 @@
     <h3 class="headline text-md-center" *ngIf="toggleActive && !toggleCreate">Lista aktualnych wydarzeń</h3>
     <h3 class="headline text-md-center" *ngIf="toggleArchive && !toggleCreate">Lista archiwalnych wydarzeń</h3>
     <h3 class="headline text-md-center" *ngIf="togglePast && !toggleCreate">Lista przeszłych wydarzeń</h3>
+    <h3 class="headline text-md-center" *ngIf="toggleNonAccepted && !toggleCreate">Lista niezaakceptowanych wydarzeń</h3>
     <table class="table" *ngIf="!toggleCreate">
       <tbody *ngFor="let event of events">
         <tr>
-          <td>
+          <td class="event-dot-icons" width="10%">
             <div *ngIf="event.TYPE=='Laboratorium'" class="dot laboratorium-dot"></div>
             <div *ngIf="event.TYPE=='Ćwiczenia'" class="dot cwiczenia-dot"></div>
             <div *ngIf="event.TYPE=='Projekt'" class="dot projekt-dot"></div>
             <div *ngIf="event.TYPE=='Zaliczenie'" class="dot zaliczenie-dot"></div>
             <div *ngIf="event.TYPE=='Wykłady'" class="dot wyklady-dot"></div>
             <div *ngIf="event.TYPE=='Inne'" class="dot inne-dot"></div>
+            <div class="important-icon" *ngIf="event.IS_IMPORTANT == true">
+              <img src="../assets/images/important.png">
+            </div>
+            <div class="private-icon" *ngIf="event.IS_PRIVATE == true">
+              <img src="../assets/images/lock.png">
+            </div>
           </td>
           <td>
             <span>{{event.NAME}}</span>
@@ -138,8 +150,12 @@
           <td>
             <span>{{event.START_HOUR}} - {{event.END_HOUR}}</span>
           </td>
-          <td *ngIf="!toggleArchive">
-            <span class="yes" (click)="archiveEvent(event)">Zarchiwizuj</span>
+          <td>
+            <span class="yes" *ngIf="togglePast" (click)="archiveEvent(event)">Zarchiwizuj</span>
+            <span class="yes" *ngIf="toggleNonAccepted" (click)="acceptEvent(event)">Zaakceptuj</span>
+          </td>
+          <td *ngIf="toggleActive">
+            <span class="yes"  [routerLink]="['/event-details', event.ID]">Więcej</span>
           </td>
         </tr>
       </tbody>

@@ -13,15 +13,15 @@ import 'rxjs/Rx';
 
 @Component({providers: [Http]})
 @Injectable()
-export class EventsService {
+export class EventDetailService {
 
   constructor(private http:Http) {
   }
 
   events = [];
 
-  getAllEvents(callback) {
-    let url = `http://planit-backend.com:8888/api/event/active`;
+  getAllEvents(eventid, callback) {
+    let url = `http://planit-backend.com:8888/api/event/` + eventid;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -40,77 +40,8 @@ export class EventsService {
     });
   }
 
-  getEvents(callback) {
-    this.getAllEvents(callback);
-  }
-
-  newEventCreate(event) {
-    let url = `http://planit-backend.com:8888/api/event/create`;
-    let authToken = localStorage.getItem('currentUser');
-   
-    let token = JSON.parse(authToken);
-
-    let headers = new Headers();
-        headers.append('Authorization', `${token.authorization}`);
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-
-    let options = new RequestOptions({ headers: headers });
-
-    this.http.post(url, event, options).subscribe((response:Response)=>{
-      let data = response.json();
-    });
-  }
-
-  newEvent(event) {
-    this.newEventCreate(event);
-  }
-
-
-  getAllArchiveEvents(callback) {
-    let url = `http://planit-backend.com:8888/api/event/archive`;
-    let authToken = localStorage.getItem('currentUser');
-   
-    let token = JSON.parse(authToken);
-
-    let headers = new Headers();
-        headers.append('Authorization', `${token.authorization}`);
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-
-    let options = new RequestOptions({ headers: headers });
-
-    this.http.get(url, options).subscribe((response:Response)=>{
-      let data = response.json();
-      let events = data;
-      callback(events);
-    });
-  }
-
-  getArchiveEvents(callback) {
-    this.getAllArchiveEvents(callback);
-  }
-
-  archiveThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/set-archive/` + event;
-    let authToken = localStorage.getItem('currentUser');
-   
-    let token = JSON.parse(authToken);
-
-    let headers = new Headers();
-        headers.append('Authorization', `${token.authorization}`);
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-
-    let options = new RequestOptions({ headers: headers });
-
-    this.http.put(url, event, options).subscribe((response:Response)=>{
-      let data = response.json();
-    });
-  }
-
-  archiveEvent(event) {
-    this.archiveThisEvent(event);
+  getEvents(eventid, callback) {
+    this.getAllEvents(eventid, callback);
   }
 
   acceptThisEvent(event) {
@@ -135,8 +66,8 @@ export class EventsService {
     this.acceptThisEvent(event);
   }
 
-  getAllPastEvents(callback) {
-    let url = `http://planit-backend.com:8888/api/event/past`;
+  revokeAcceptThisEvent(event) {
+    let url = `http://planit-backend.com:8888/api/event/revoke-accepted/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -148,19 +79,18 @@ export class EventsService {
 
     let options = new RequestOptions({ headers: headers });
 
-    this.http.get(url, options).subscribe((response:Response)=>{
+    this.http.put(url, event, options).subscribe((response:Response)=>{
       let data = response.json();
-      let events = data;
-      callback(events);
     });
   }
 
-  getPastEvents(callback) {
-    this.getAllPastEvents(callback);
+  revokeAcceptEvent(event) {
+    this.revokeAcceptThisEvent(event);
   }
 
-  getAllNonAcceptedEvents(callback) {
-    let url = `http://planit-backend.com:8888/api/event/not-accepted`;
+
+  importantThisEvent(event) {
+    let url = `http://planit-backend.com:8888/api/event/set-important/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -172,15 +102,79 @@ export class EventsService {
 
     let options = new RequestOptions({ headers: headers });
 
-    this.http.get(url, options).subscribe((response:Response)=>{
+    this.http.put(url, event, options).subscribe((response:Response)=>{
       let data = response.json();
-      let events = data;
-      callback(events);
     });
   }
 
-  getNonAcceptedEvents(callback) {
-    this.getAllNonAcceptedEvents(callback);
+  importantEvent(event) {
+    this.importantThisEvent(event);
+  }
+
+  revokeImportantThisEvent(event) {
+    let url = `http://planit-backend.com:8888/api/event/revoke-important/` + event;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.put(url, event, options).subscribe((response:Response)=>{
+      let data = response.json();
+    });
+  }
+
+  revokeImportantEvent(event) {
+    this.revokeImportantThisEvent(event);
+  }
+
+  privateThisEvent(event) {
+    let url = `http://planit-backend.com:8888/api/event/set-private/` + event;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.put(url, event, options).subscribe((response:Response)=>{
+      let data = response.json();
+    });
+  }
+
+  privateEvent(event) {
+    this.privateThisEvent(event);
+  }
+
+  revokePrivateThisEvent(event) {
+    let url = `http://planit-backend.com:8888/api/event/revoke-private/` + event;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.put(url, event, options).subscribe((response:Response)=>{
+      let data = response.json();
+    });
+  }
+
+  revokePrivateEvent(event) {
+    this.revokePrivateThisEvent(event);
   }
 
   tags = [];
@@ -208,7 +202,7 @@ export class EventsService {
     this.getAllTags(callback);
   }
 
-  addTagsToThisEvent(eventObject) {
+   addTagsToThisEvent(eventObject) {
     let url = `http://planit-backend.com:8888/api/event/add-tags/` + eventObject.id;
     let authToken = localStorage.getItem('currentUser');
    
