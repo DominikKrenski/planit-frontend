@@ -63,7 +63,6 @@ export class EditAccountComponent implements OnInit {
             this.userForm.INDEX_NUMBER = this.myInfo['INDEX_NUMBER'];
             this.userForm.START_YEAR = this.myInfo['START_YEAR'];
             this.userForm.INFO = this.myInfo['INFO'];
-            console.log(this.myInfo);
           },
           err => {
             this.formSubmit = 1;
@@ -136,6 +135,5 @@ export class EditAccountComponent implements OnInit {
   _handleReaderLoaded(readerEvt) {
      var binaryString = readerEvt.target.result;
             this.base64textString= btoa(binaryString);
-            console.log(btoa(binaryString));
     }
 }

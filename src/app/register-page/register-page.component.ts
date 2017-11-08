@@ -122,6 +122,5 @@ export class RegisterPageComponent implements OnInit {
   _handleReaderLoaded(readerEvt) {
      var binaryString = readerEvt.target.result;
           this.base64textString= btoa(binaryString);
-          console.log(btoa(binaryString));
   }
 }

@@ -26,7 +26,6 @@ export class UsersListComponent implements OnInit {
     if(this.getAuth()) {
       this.usersService.getUsers((users)=>{
         this.users = users;
-        console.log(this.users);
       });
     }    
   };

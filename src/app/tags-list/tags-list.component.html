@@ -10,7 +10,7 @@
         placeholder="Nazwa taga"
         #nameRef="ngModel"
         required
-        pattern="[a-zA-Z]+"
+        pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
         minlength="3"
         [(ngModel)]="createTag.NAME"
       />
@@ -46,7 +46,7 @@
                 #nameEditRef="ngModel"
                 size="50"
                 minlength="3"
-                pattern="[A-Za-z]+"
+                pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
               ></inline-editor>
               <div class="error-validation">
                   <div *ngIf="(nameEditRef.errors?.required)" class="text-danger">To pole jest wymagane</div>  

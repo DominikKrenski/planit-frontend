@@ -35,7 +35,7 @@
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Brawo!</strong> Twoje konto zostało edytowane.
               </div>
-                <div class="form-group clearfix">
+              <div class="form-group clearfix">
                   <label for="inputPassword" class="col-xs-3 control-label">Imię</label>
                   <div class="col-xs-9">
                       <input 
@@ -44,9 +44,17 @@
                           name="NAME" 
                           placeholder="Jan"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #nameRef="ngModel"
                           [(ngModel)]="userForm.NAME"
+                          required
+                          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+                          minlength="3"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(nameRef.errors?.pattern)" class="text-danger">Imię może zawierać jedynie litery</div>
+                          <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość imienia to 3 znaki</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -58,9 +66,17 @@
                           name="SURNAME" 
                           placeholder="Kowalski"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #surnameRef="ngModel"
                           [(ngModel)]="userForm.SURNAME"
+                          required
+                          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+                          minlength="3"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(surnameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(surnameRef.errors?.pattern)" class="text-danger">Nazwisko może zawierać jedynie litery</div>
+                          <div *ngIf="(surnameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwiska to 3 znaki</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -72,9 +88,17 @@
                           name="EMAIL" 
                           placeholder="jan.kowalski@student.pg.gda.pl"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #emailRef="ngModel"
                           [(ngModel)]="userForm.EMAIL"
+                          required
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                          minlength="5"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(emailRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(emailRef.errors?.pattern)" class="text-danger">Błędna struktura adresu email</div>
+                          <div *ngIf="(surnameRef.errors?.minlength)" class="text-danger">Miminalna długość adresu email to 5 znaków</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -86,9 +110,17 @@
                           name="GROUP" 
                           placeholder="2"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #groupRef="ngModel"
                           [(ngModel)]="userForm.GROUP"
+                          required
+                          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9]+"
+                          minlength="1"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(groupRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(groupRef.errors?.pattern)" class="text-danger">Nazwa grupy może zawierać jedynie cyfry i litery</div>
+                          <div *ngIf="(groupRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy grupy to 1 znak</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -100,9 +132,17 @@
                           name="INDEX_NUMBER" 
                           placeholder="100000"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #indexnumberdRef="ngModel"
                           [(ngModel)]="userForm.INDEX_NUMBER"
+                          required
+                          pattern="[0-9]+"
+                          minlength="5"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(indexnumberdRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(indexnumberdRef.errors?.pattern)" class="text-danger">Numer indeksu może zawierać jedynie cyfry</div>
+                          <div *ngIf="(indexnumberdRef.errors?.minlength)" class="text-danger">Miminalna długość numeru indeksu to 5 znaków</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -114,9 +154,18 @@
                           name="START_YEAR" 
                           placeholder="2014"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #startyearRef="ngModel"
                           [(ngModel)]="userForm.START_YEAR"
+                          required
+                          pattern="[0-9]{4}"
+                          minlength="4"
+                          maxlength="4"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(startyearRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(startyearRef.errors?.pattern)" class="text-danger">Rok rozpoczęcia może zawierać jedynie cyfry</div>
+                          <div *ngIf="(startyearRef.errors?.minlength)" class="text-danger">Długość roku rozpoczęcia to 4 znaki</div>
+                      </div>
                   </div>
                 </div>
                 <div class="form-group clearfix">
@@ -128,9 +177,17 @@
                           name="INFO" 
                           placeholder="Lubię koty"
                           class="form-control"
-                          #passwordRef="ngModel"
+                          #infoRef="ngModel"
                           [(ngModel)]="userForm.INFO"
+                          required
+                          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
+                          minlength="3"
                       >
+                      <div class="error-validation">
+                          <div *ngIf="(infoRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                          <div *ngIf="(infoRef.errors?.pattern)" class="text-danger">Pole może zawierać jedynie litery, cyfry, spacje, przecinki lub kropki.</div>
+                          <div *ngIf="(infoRef.errors?.minlength)" class="text-danger">Miminalna długość opisu to 3 znaki</div>
+                      </div>
                   </div>
                 </div>
                 <hr />
