@@ -1,3 +1,9 @@
-<p>
-  calendar-list works!
-</p>
+
+<mwl-calendar-month-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [refresh]="refresh"
+  [activeDayIsOpen]="activeDayIsOpen"
+  (dayClicked)="dayClicked($event.day)"
+  (eventTimesChanged)="eventTimesChanged($event)">
+</mwl-calendar-month-view>

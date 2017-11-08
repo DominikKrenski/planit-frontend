@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'angular-calendar';
+import {InlineEditorModule} from 'ng2-inline-editor';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -62,6 +65,9 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     BrowserModule,
     FormsModule,
     HttpModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot(),
+    InlineEditorModule,
     routerModule
   ],
   providers: [

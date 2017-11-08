@@ -1,35 +1,65 @@
 <div class="container">
   <div class="col-md-12" *ngIf="currentUser">
     <br />
-    <div class="text-xs-right">
-      <form #formRef="ngForm" novalidate="true" (ngSubmit)="newTag(formRef.valid, createTag)">
-        <input type="text" class="form-control add-tag-input" name="tagname" [(ngModel)]="createTag.NAME" />
+    <h3 class="headline text-center">Dodaj nowy tag</h3>
+    <form #formRef="ngForm" novalidate="true" (ngSubmit)="newTag(formRef.valid, createTag)">
+      <input 
+        type="text" 
+        class="form-control add-tag-input" 
+        name="tagname" 
+        placeholder="Nazwa taga"
+        #nameRef="ngModel"
+        required
+        pattern="[a-zA-Z]+"
+        minlength="3"
+        [(ngModel)]="createTag.NAME"
+      />
+      <div class="error-validation">
+          <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+          <div *ngIf="(nameRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
+          <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
+      </div>
+      <div class="text-right">
         <button 
             type="submit" 
-            class="btn btn-default"
+            class="btn btn-default add-tag-button"
         >Dodaj nowy tag +</button>
-      </form>
-    </div>
-    <h3 class="headline text-md-center">Lista wszystkich tagów</h3>
+      </div>
+    </form>
+    <hr />
+    <h3 class="headline text-center">Lista tagów</h3>
     <table class="table">
       <tr>
         <th>Nazwa</th>
-        <th width="20%" class="text-xs-center">Czy zaakceptowany?</th>
+        <th width="20%" class="text-center">Czy zaakceptowany?</th>
         <th width="10%"></th>
       </tr>
       <tbody *ngFor="let tag of tags">
         <tr>
           <td>
-            <span *ngIf="info != tag.NAME">{{tag.NAME}}</span>
-            <input *ngIf="info === tag.NAME" class="form-control edit-tag" [(ngModel)]="newName" />
+            <span *ngIf="info != tag.NAME" class="tag-name">
+              <inline-editor 
+                type="text" 
+                [(ngModel)]="tag.NAME" 
+                (onSave)="changeName($event, tag)" 
+                name="editableText1"
+                #nameEditRef="ngModel"
+                size="50"
+                minlength="3"
+                pattern="[A-Za-z]+"
+              ></inline-editor>
+              <div class="error-validation">
+                  <div *ngIf="(nameEditRef.errors?.required)" class="text-danger">To pole jest wymagane</div>  
+                  <div *ngIf="(nameEditRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
+                  <div *ngIf="(nameEditRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
+              </div>
+            </span>
           </td>
-          <td class="text-xs-center">
+          <td class="text-center">
             <span *ngIf="tag.IS_ACCEPTED==true" class="yes" (click)="rejectTag(tag)">TAK</span>
             <span *ngIf="tag.IS_ACCEPTED==false" class="no" (click)="acceptTag(tag)" >NIE</span>
           </td>
           <td>
-            <span class="add-info" *ngIf="info != tag.NAME" (click)="info = tag.NAME">i</span>
-            <span class="success-info" *ngIf="info === tag.NAME" (click)="changeName(newName, tag)"></span>
             <span class="remove-info" (click)="removeTag(tag)">x</span>
           </td>
         </tr>

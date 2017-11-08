@@ -35,7 +35,6 @@ export class LoginPageComponent implements OnInit {
   server = 'http://planit-backend.com:8888/api/user/login';
 
   save(valid, userForm) {
-    
     if (valid) {
       let headers = new Headers();
       headers.append('Accept', 'application/json');

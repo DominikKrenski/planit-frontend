@@ -10,7 +10,7 @@
         >Nowe wydarzenie +</button>
       </div>
       <div class="col-md-9">
-        <div class="text-xs-right">
+        <div class="text-right">
           <button 
               class="btn btn-default"
               (click)="toggleCreate=!toggleCreate"
@@ -117,10 +117,10 @@
       </div>
     </div>
     <br />
-    <h3 class="headline text-md-center" *ngIf="toggleActive && !toggleCreate">Lista aktualnych wydarzeń</h3>
-    <h3 class="headline text-md-center" *ngIf="toggleArchive && !toggleCreate">Lista archiwalnych wydarzeń</h3>
-    <h3 class="headline text-md-center" *ngIf="togglePast && !toggleCreate">Lista przeszłych wydarzeń</h3>
-    <h3 class="headline text-md-center" *ngIf="toggleNonAccepted && !toggleCreate">Lista niezaakceptowanych wydarzeń</h3>
+    <h3 class="headline text-center" *ngIf="toggleActive && !toggleCreate">Lista aktualnych wydarzeń</h3>
+    <h3 class="headline text-center" *ngIf="toggleArchive && !toggleCreate">Lista archiwalnych wydarzeń</h3>
+    <h3 class="headline text-center" *ngIf="togglePast && !toggleCreate">Lista przeszłych wydarzeń</h3>
+    <h3 class="headline text-center" *ngIf="toggleNonAccepted && !toggleCreate">Lista niezaakceptowanych wydarzeń</h3>
     <table class="table" *ngIf="!toggleCreate">
       <tbody *ngFor="let event of events">
         <tr>

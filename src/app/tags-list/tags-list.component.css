@@ -40,11 +40,8 @@
     border-bottom: 1px dashed #d8d8d8;
 }
 .add-tag-input {
-    width: 200px;
-    display: inline-block;
+    display: block;
     height: 32px;
-    position: relative;
-    top: 1px;
 }
 .edit-tag {
     height: 25px;
@@ -60,4 +57,11 @@
 .no:hover,
 .yes:hover  {
     text-decoration: underline;
+}
+.error-validation > div {
+    font-size: 13px;
+    margin-top: 5px;
+}
+.add-tag-button {
+    margin-top: 15px;
 }

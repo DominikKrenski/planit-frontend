@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-md-12" *ngIf="currentUser">
     <br />
-    <h3 class="headline text-md-center">Informacje o wydarzeniu</h3>
+    <h3 class="headline text-center">Informacje o wydarzeniu</h3>
     <div class="row" *ngIf="event.IS_ARCHIVE == false">
       <div class="col-md-4">
         <div class="block-ev yes" *ngIf="event.IS_ACCEPTED == true" (click)="revokeAcceptEvent(event)">
@@ -37,7 +37,7 @@
     </div>
     <br /><br />
     <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm, event)">
-    <div class="text-xs-right">
+    <div class="text-right">
       <span class="btn btn-default" (click)="editToggle=!editToggle">Edytuj wydarzenie</span>
     </div>
     <br />
@@ -150,7 +150,7 @@
       </div>
     </div>
     <div *ngIf="editToggle" class="row">
-      <div class="col-md-12 text-xs-right">
+      <div class="col-md-12 text-right">
         <div class="form-group clearfix">
           <br />
             <button 
@@ -165,7 +165,7 @@
     <br />
     <br />
     
-    <h3 class="headline text-md-center">Informacje o tagach</h3>
+    <h3 class="headline text-center">Informacje o tagach</h3>
     <div class="row">
       <div class="col-md-4">
         <b>Lista wszystkich tagów:</b>
