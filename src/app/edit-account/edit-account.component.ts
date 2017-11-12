@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'edit-account',
@@ -19,6 +20,8 @@ export class EditAccountComponent implements OnInit {
 
   currentUser = "";
   myInfo = {};
+  myinfo = {};
+
   authToken = localStorage.getItem('currentUser');
   userForm = {
     "AVATAR": "",
@@ -70,7 +73,7 @@ export class EditAccountComponent implements OnInit {
       );
   }
 
-  constructor(private http:Http, private router: Router) {
+  constructor(private http:Http, private router: Router, private accountService:AccountService) {
     this.currentUser = this.getAuth();
   }
 
@@ -79,6 +82,11 @@ export class EditAccountComponent implements OnInit {
         return JSON.parse(localStorage.getItem('currentUser'));
     };  
     this.getUser();
+    if(this.getAuth()) {
+      this.accountService.getUserInfo((myinfo)=>{
+        this.myinfo = myinfo;
+      });
+    }
   }
 
   formSubmit = 0;
@@ -106,6 +114,11 @@ export class EditAccountComponent implements OnInit {
         .subscribe( 
           (res) => {
             this.formSubmit = 2;
+            if(this.getAuth()) {
+              this.accountService.getUserInfo((myinfo)=>{
+                this.myinfo = myinfo;
+              });
+            }
           },
           err => {
             this.formSubmit = 1;

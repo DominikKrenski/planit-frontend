@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'change-password',
@@ -19,12 +20,13 @@ export class ChangePasswordComponent implements OnInit {
 
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
-  myinfo = {}
+  myinfo = {};
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   }; 
-  constructor(private http:Http, private router: Router) {
+
+  constructor(private http:Http, private router: Router, private accountService:AccountService) {
     this.currentUser = this.getAuth();
   }
 
@@ -32,6 +34,11 @@ export class ChangePasswordComponent implements OnInit {
     function getAuth() {
         return JSON.parse(localStorage.getItem('currentUser'));
     };    
+    if(this.getAuth()) {
+      this.accountService.getUserInfo((myinfo)=>{
+        this.myinfo = myinfo;
+      });
+    }  
   }
 
   formSubmit = 0;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from './events.service'
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import 'eonasdan-bootstrap-datetimepicker';
 
 @Component({
   selector: 'events-list',
@@ -35,12 +37,23 @@ export class EventsListComponent implements OnInit {
       format: "DD.MM.YYYY"
   };
 
+  date: moment.Moment;
+  eventStart: moment.Moment;
+  eventEnd: moment.Moment;
+  a2eOptionsDate: any;
+  a2eOptionsTime: any;
+
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
   constructor(private eventsService:EventsService, private activatedRoute:ActivatedRoute) {
     this.currentUser = this.getAuth();
+    this.date = moment();
+    this.eventStart = moment();
+    this.eventEnd = moment();
+    this.a2eOptionsDate = {format: 'DD/MM/YYYY'};
+    this.a2eOptionsTime = {format: 'HH:mm'};
   }
 
   ngOnInit() {
@@ -65,13 +78,28 @@ export class EventsListComponent implements OnInit {
     "NAME": "",
     "PLACE": "",
     "TYPE": "",
-    "START_DATE": "",
-    "START_HOUR": "",
-    "END_HOUR": "",
+    "START_DATE": this.date,
+    "START_HOUR": this.eventStart,
+    "END_HOUR": this.eventEnd,
     "IS_ARCHIVE": false
   }
+
+  dateChange(date) {
+    this.date = date;
+  }
+  starthourChange(eventStart) {
+    this.eventStart = eventStart;
+  }
+  endhourChange(eventEnd) {
+    this.eventEnd = eventEnd;
+  }
+
   newEvent(valid, createEvent) {
+    createEvent.START_DATE = this.date.format('DD/MM/YYYY');
+    createEvent.START_HOUR = this.eventStart.format('HH:mm');
+    createEvent.END_HOUR = this.eventEnd.format('HH:mm');
     if(valid) {
+      console.log('ook');
       this.eventsService.newEvent(createEvent);
       this.toggleCreate = !this.toggleCreate;
       this.toggleArchive = false;
