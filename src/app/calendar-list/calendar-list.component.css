@@ -1,0 +1,16 @@
+.header-prev-next-block {
+    margin-bottom: 30px;
+}
+.header-prev-next-block h3.today-title {
+    margin: 0;
+    font-size: 24px;
+    text-transform: capitalize;
+    display: inline-block;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #333333;
+}
+.header-prev-next-block img {
+    position: relative;
+    top: 2px;
+}

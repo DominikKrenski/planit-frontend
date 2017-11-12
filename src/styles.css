@@ -172,3 +172,86 @@ a.c-inline-editor {
 .bootstrap-datetimepicker-widget table td.today:before {
   border-bottom-color: #ff5733;
 }
+
+.cal-month-view .cal-day-badge {
+  display: none;
+}
+
+.cal-month-view .cal-day-number {
+  margin: 15px 0;
+  float: none;
+  text-align: center;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  vertical-align: middle;
+  opacity: 1;
+  line-height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  color: #5a5a5a;
+}
+
+.cal-month-view .cal-day-cell,
+.cal-month-view .cal-cell-top {
+  min-height: 60px;
+  text-align: center;
+}
+
+.cal-month-view .cal-day-cell.cal-today {
+  background-color: transparent;
+}
+
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  position: relative;
+  background: #ffa500;
+  color: #ffffff;
+  font-size: 12px;
+  border: 1px solid #ffa500;
+}
+
+.cal-month-view .cal-day-cell.cal-weekend {
+  background: #f8f8f8;
+}
+
+.cal-month-view .cal-month-view .cal-cell-row .cal-cell:hover, 
+.cal-month-view .cal-cell.cal-has-events.cal-open {
+  background-color: rgba(255, 165, 0, 0.11);
+}
+
+.cal-month-view .cal-events {
+  margin: 5px 3px;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.cal-month-view .cal-header .cal-cell {
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 10px;
+  padding: 5px;
+}
+
+.cal-month-view .cal-event-title {
+  color: #5a5a5a;
+  text-decoration: none;
+}
+
+.cal-month-view .cal-open-day-events {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 1px dashed #ffa500;
+  background-color: rgba(255, 165, 0, 0.11);
+}
+
+.cal-month-view .cal-open-day-events .cal-event {
+  margin-right: 10px;
+}
+
+.cal-month-view .cal-open-day-events > div + div {
+  margin-top: 5px;
+}

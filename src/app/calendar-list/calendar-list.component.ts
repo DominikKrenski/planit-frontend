@@ -23,16 +23,20 @@ import {
 
 const colors: any = {
   red: {
-    primary: '#ad2121',
+    primary: '#920a3f',
+    secondary: '#FAE3E3'
+  },
+  pink: {
+    primary: '#ff004a',
+    secondary: '#FAE3E3'
+  },
+  yellow: {
+    primary: '#ffbe39',
     secondary: '#FAE3E3'
   },
   blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
+    primary: '#0093ff',
+    secondary: '#FAE3E3'
   }
 };
 
@@ -43,6 +47,17 @@ const colors: any = {
   styleUrls: ['./calendar-list.component.css']
 })
 export class CalendarListComponent implements OnInit {
+
+  currentUser = "";
+  authToken = localStorage.getItem('currentUser');
+
+  getAuth() {
+    return JSON.parse(localStorage.getItem('currentUser'));
+  };
+
+  constructor() {
+    this.currentUser = this.getAuth();
+  }
 
   ngOnInit() {
   }
@@ -74,46 +89,109 @@ export class CalendarListComponent implements OnInit {
       }
     ];
   
-    refresh: Subject<any> = new Subject();
+    locale: string = 'pl';
   
     events: CalendarEvent[] = [
       {
-        start: subDays(startOfDay(new Date()), 1),
-        end: addDays(new Date(), 1),
-        title: 'A 3 day event',
-        color: colors.red,
-        actions: this.actions
+        start: new Date(),
+        end: new Date(),
+        title: 'Ćwiczenia platformy technologiczne',
+        color: colors.yellow
       },
       {
-        start: startOfDay(new Date()),
-        title: 'An event with no end date',
-        color: colors.yellow,
-        actions: this.actions
+        start: addDays(startOfDay(new Date()), 2),
+        end: addDays(startOfDay(new Date()), 2),
+        title: 'Ćwiczenia GIS',
+        color: colors.yellow
       },
       {
-        start: subDays(endOfMonth(new Date()), 3),
-        end: addDays(endOfMonth(new Date()), 3),
-        title: 'A long event that spans 2 months',
+        start: subDays(startOfDay(new Date()), 5),
+        end: subDays(startOfDay(new Date()), 5),
+        title: 'Ćwiczenia platformy technologiczne',
+        color: colors.yellow
+      },
+      {
+        start: addDays(startOfDay(new Date()), 10),
+        end: addDays(startOfDay(new Date()), 10),
+        title: 'Ćwiczenia GIS',
+        color: colors.yellow
+      },
+      {
+        start: new Date(),
+        end: new Date(),
+        title: 'Egzamin AKO',
+        color: colors.red
+      },
+      {
+        start: addDays(startOfDay(new Date()), 6),
+        end: addDays(startOfDay(new Date()), 6),
+        title: 'Kolokwium grafy',
+        color: colors.red
+      },
+      {
+        start: subDays(startOfDay(new Date()), 10),
+        end: subDays(startOfDay(new Date()), 10),
+        title: 'Oddanie projektu, platformy technologiczne',
+        color: colors.red
+      },
+      {
+        start: addDays(startOfDay(new Date()), 10),
+        end: addDays(startOfDay(new Date()), 10),
+        title: 'Koło AKO',
+        color: colors.red
+      },
+      {
+        start: new Date(),
+        end: new Date(),
+        title: 'Wykład analiza mat',
+        color: colors.pink
+      },
+      {
+        start: addDays(startOfDay(new Date()), 4),
+        end: addDays(startOfDay(new Date()), 4),
+        title: 'Wykład analiza mat',
+        color: colors.pink
+      },
+      {
+        start: subDays(startOfDay(new Date()), 5),
+        end: subDays(startOfDay(new Date()), 5),
+        title: 'Wykład GMS',
+        color: colors.pink
+      },
+      {
+        start: addDays(startOfDay(new Date()), 12),
+        end: addDays(startOfDay(new Date()), 12),
+        title: 'Wykład GMS',
+        color: colors.pink
+      },
+      {
+        start: addDays(startOfDay(new Date()), 2),
+        end: addDays(startOfDay(new Date()), 2),
+        title: 'Wykład AKO',
         color: colors.blue
       },
       {
-        start: addHours(startOfDay(new Date()), 2),
-        end: new Date(),
-        title: 'A draggable and resizable event',
-        color: colors.yellow,
-        actions: this.actions,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        },
-        draggable: true
-      }
+        start: addDays(startOfDay(new Date()), 4),
+        end: addDays(startOfDay(new Date()), 4),
+        title: 'Wykład AKO',
+        color: colors.blue
+      },
+      {
+        start: addDays(startOfDay(new Date()), 4),
+        end: addDays(startOfDay(new Date()), 4),
+        title: 'Laborki grafy',
+        color: colors.yellow
+      },
+      {
+        start: addDays(startOfDay(new Date()), 12),
+        end: addDays(startOfDay(new Date()), 12),
+        title: 'Laborki grafy',
+        color: colors.blue
+      },
     ];
   
-    activeDayIsOpen: boolean = true;
-  
-    constructor() {}
-  
+    activeDayIsOpen: boolean = false;
+    
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
         if (
