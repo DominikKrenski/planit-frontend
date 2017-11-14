@@ -255,3 +255,40 @@ a.c-inline-editor {
 .cal-month-view .cal-open-day-events > div + div {
   margin-top: 5px;
 }
+.typesLegend {
+  font-size: 0;
+}
+.typesLegend > div {
+  font-size: 13px;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 16.66%;
+  text-align: center;
+}
+.typesLegend .dot {
+  margin: 5px auto;
+}
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #eee;
+}
+.dot.laboratorium-dot {
+  background: #00c2f1;
+}
+.dot.cwiczenia-dot {
+  background: #000b9c;
+}
+.dot.projekt-dot {
+  background: #ffcc0c;
+}
+.dot.zaliczenie-dot {
+  background: #f10062;
+}
+.dot.wyklady-dot {
+  background: #00eacc;
+}
+.dot.inne-dot {
+  background: #c5ea00;
+}

@@ -78,43 +78,6 @@
     background: #ff5733;
     color: #fff; 
 }
-.dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #eee;
-}
-.dot.laboratorium-dot {
-    background: #00c2f1;
-}
-.dot.cwiczenia-dot {
-    background: #000b9c;
-}
-.dot.projekt-dot {
-    background: #ffcc0c;
-}
-.dot.zaliczenie-dot {
-    background: #f10062;
-}
-.dot.wyklady-dot {
-    background: #00eacc;
-}
-.dot.inne-dot {
-    background: #c5ea00;
-}
-.typesLegend {
-    font-size: 0;
-}
-.typesLegend > div {
-    font-size: 13px;
-    text-transform: uppercase;
-    display: inline-block;
-    width: 16.66%;
-    text-align: center;
-}
-.typesLegend .dot {
-    margin: 5px auto;
-}
 .dashed-hr {
     border-style: dashed;
 }
@@ -159,18 +122,14 @@ input[type="checkbox"]:checked + label {
 .tags-list-item + .tags-list-item {
     margin-left: 5px;
 }
+.table-events td {
+    vertical-align: middle;
+}
 .event-dot-icons {
     position: relative;
 }
-.important-icon {
-    position: absolute;
-    top: 0;
-    right: 30px;
-}
-.private-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
+.event-stat-icons > div {
+    display: inline-block;
 }
 .error-validation > div {
     font-size: 13px;

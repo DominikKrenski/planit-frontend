@@ -36,3 +36,28 @@ table.about-me-table td {
     font-size: 13px;
     margin-top: 5px;
 }
+
+.input-file-wrapper {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+}
+.input-file-wrapper input[type=file] {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+}
+.input-file-wrapper label {
+    display: block;
+    width: 100%;
+    background: #ff5733;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: 300;
+}
+.input-file-wrapper i {
+    margin-right: 10px;
+}

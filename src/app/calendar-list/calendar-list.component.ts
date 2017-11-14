@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { CalendarListService } from './calendar-list.service';
 import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef
 } from '@angular/core';
 import {
+  isSameMonth,
+  isSameDay,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
   startOfDay,
   endOfDay,
-  subDays,
   addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours
+  subDays,
+  format
 } from 'date-fns';
 import { Subject } from 'rxjs/Subject';
 import {
@@ -22,21 +26,23 @@ import {
 } from 'angular-calendar';
 
 const colors: any = {
-  red: {
-    primary: '#920a3f',
-    secondary: '#FAE3E3'
+  laboratorium: {
+    primary: '#00c2f1'
   },
-  pink: {
-    primary: '#ff004a',
-    secondary: '#FAE3E3'
+  cwiczenia: {
+    primary: '#000b9c'
   },
-  yellow: {
-    primary: '#ffbe39',
-    secondary: '#FAE3E3'
+  projekt: {
+    primary: '#ffcc0c'
   },
-  blue: {
-    primary: '#0093ff',
-    secondary: '#FAE3E3'
+  zaliczenie: {
+    primary: '#f10062'
+  },
+  wyklady: {
+    primary: '#00eacc'
+  },
+  inne: {
+    primary: 'c5ea00'
   }
 };
 
@@ -50,178 +56,113 @@ export class CalendarListComponent implements OnInit {
 
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
+  myevents = [];
+  events: CalendarEvent[] = [];
 
   getAuth() {
     return JSON.parse(localStorage.getItem('currentUser'));
   };
+  
 
-  constructor() {
+  constructor(private calendarlistService:CalendarListService) {
     this.currentUser = this.getAuth();
   }
 
   ngOnInit() {
+    if(this.getAuth()) {
+      this.fetchEvents(); 
+    }
   }
 
-  @ViewChild('modalContent') modalContent: TemplateRef<any>;
-  
-    view: string = 'month';
-  
-    viewDate: Date = new Date();
-  
-    modalData: {
-      action: string;
-      event: CalendarEvent;
-    };
-  
-    actions: CalendarEventAction[] = [
-      {
-        label: '<i class="fa fa-fw fa-pencil"></i>',
-        onClick: ({ event }: { event: CalendarEvent }): void => {
-          this.handleEvent('Edited', event);
-        }
-      },
-      {
-        label: '<i class="fa fa-fw fa-times"></i>',
-        onClick: ({ event }: { event: CalendarEvent }): void => {
-          this.events = this.events.filter(iEvent => iEvent !== event);
-          this.handleEvent('Deleted', event);
-        }
-      }
-    ];
-  
-    locale: string = 'pl';
-  
-    events: CalendarEvent[] = [
-      {
-        start: new Date(),
-        end: new Date(),
-        title: 'Ćwiczenia platformy technologiczne',
-        color: colors.yellow
-      },
-      {
-        start: addDays(startOfDay(new Date()), 2),
-        end: addDays(startOfDay(new Date()), 2),
-        title: 'Ćwiczenia GIS',
-        color: colors.yellow
-      },
-      {
-        start: subDays(startOfDay(new Date()), 5),
-        end: subDays(startOfDay(new Date()), 5),
-        title: 'Ćwiczenia platformy technologiczne',
-        color: colors.yellow
-      },
-      {
-        start: addDays(startOfDay(new Date()), 10),
-        end: addDays(startOfDay(new Date()), 10),
-        title: 'Ćwiczenia GIS',
-        color: colors.yellow
-      },
-      {
-        start: new Date(),
-        end: new Date(),
-        title: 'Egzamin AKO',
-        color: colors.red
-      },
-      {
-        start: addDays(startOfDay(new Date()), 6),
-        end: addDays(startOfDay(new Date()), 6),
-        title: 'Kolokwium grafy',
-        color: colors.red
-      },
-      {
-        start: subDays(startOfDay(new Date()), 10),
-        end: subDays(startOfDay(new Date()), 10),
-        title: 'Oddanie projektu, platformy technologiczne',
-        color: colors.red
-      },
-      {
-        start: addDays(startOfDay(new Date()), 10),
-        end: addDays(startOfDay(new Date()), 10),
-        title: 'Koło AKO',
-        color: colors.red
-      },
-      {
-        start: new Date(),
-        end: new Date(),
-        title: 'Wykład analiza mat',
-        color: colors.pink
-      },
-      {
-        start: addDays(startOfDay(new Date()), 4),
-        end: addDays(startOfDay(new Date()), 4),
-        title: 'Wykład analiza mat',
-        color: colors.pink
-      },
-      {
-        start: subDays(startOfDay(new Date()), 5),
-        end: subDays(startOfDay(new Date()), 5),
-        title: 'Wykład GMS',
-        color: colors.pink
-      },
-      {
-        start: addDays(startOfDay(new Date()), 12),
-        end: addDays(startOfDay(new Date()), 12),
-        title: 'Wykład GMS',
-        color: colors.pink
-      },
-      {
-        start: addDays(startOfDay(new Date()), 2),
-        end: addDays(startOfDay(new Date()), 2),
-        title: 'Wykład AKO',
-        color: colors.blue
-      },
-      {
-        start: addDays(startOfDay(new Date()), 4),
-        end: addDays(startOfDay(new Date()), 4),
-        title: 'Wykład AKO',
-        color: colors.blue
-      },
-      {
-        start: addDays(startOfDay(new Date()), 4),
-        end: addDays(startOfDay(new Date()), 4),
-        title: 'Laborki grafy',
-        color: colors.yellow
-      },
-      {
-        start: addDays(startOfDay(new Date()), 12),
-        end: addDays(startOfDay(new Date()), 12),
-        title: 'Laborki grafy',
-        color: colors.blue
-      },
-    ];
-  
-    activeDayIsOpen: boolean = false;
-    
-    dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-      if (isSameMonth(date, this.viewDate)) {
-        if (
-          (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-          events.length === 0
-        ) {
-          this.activeDayIsOpen = false;
-        } else {
-          this.activeDayIsOpen = true;
-          this.viewDate = date;
-        }
-      }
-    }
-  
-    eventTimesChanged({
-      event,
-      newStart,
-      newEnd
-    }: CalendarEventTimesChangedEvent): void {
-      event.start = newStart;
-      event.end = newEnd;
-      this.handleEvent('Dropped or resized', event);
-      this.refresh.next();
-    }
-  
-    handleEvent(action: string, event: CalendarEvent): void {
-     
-    }
-  
-    addEvent(): void {
-    }
+  fetchEvents(): void {
+    const getStart: any = {
+      month: startOfMonth,
+      week: startOfWeek,
+      day: startOfDay
+    }[this.view];
 
+    const getEnd: any = {
+      month: endOfMonth,
+      week: endOfWeek,
+      day: endOfDay
+    }[this.view];
+
+    this.calendarlistService.getEvents((myevents)=>{
+      this.myevents = myevents;
+      console.log(this.myevents);
+      this.events = [];    
+
+      for (let i = 0; i < this.myevents.length; i++) {
+        var stringDateToObj = this.myevents[i].START_DATE.split("/");
+        var dateObj = new Date(stringDateToObj[2], stringDateToObj[1] - 1, stringDateToObj[0]);
+        var typeColor = this.myevents[i].TYPE;
+        var typeColorVal = colors.laboratorium;
+
+        switch(typeColor) {
+          case 'Ćwiczenia': {
+            typeColorVal = colors.cwiczenia;
+            break;
+          }
+          case 'Projekt': {
+            typeColorVal = colors.projekt;
+            break;
+          }
+          case 'Zaliczenie': {
+            typeColorVal = colors.zaliczenie;
+            break;
+          }
+          case 'Wykłady': {
+            typeColorVal = colors.wyklady;
+            break;
+          }
+          case 'Inne': {
+            typeColorVal = colors.inne;
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+        this.events.push({
+            start: dateObj,
+            end: dateObj,
+            title: this.myevents[i].NAME+ " " + this.myevents[i].START_HOUR + "-" + this.myevents[i].END_HOUR,
+            color: typeColorVal
+        })
+      }
+    }, format(getStart(this.viewDate), 'DD/MM/YYYY'), format(getEnd(this.viewDate), 'DD/MM/YYYY'));    
+  }
+
+  setPrevStartEndDates() {
+    console.log('yyy');
+  }
+
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;  
+  view: string = 'month';  
+  viewDate: Date = new Date(); 
+  locale: string = 'pl';  
+  activeDayIsOpen: boolean = false;
+    
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
+      }
+    }
+  }
+  
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd
+  }: CalendarEventTimesChangedEvent): void {
+    event.start = newStart;
+    event.end = newEnd;
+  }
 }

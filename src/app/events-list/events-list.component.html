@@ -190,22 +190,24 @@
     <h3 class="headline text-center" *ngIf="toggleArchive && !toggleCreate">Lista archiwalnych wydarzeń</h3>
     <h3 class="headline text-center" *ngIf="togglePast && !toggleCreate">Lista przeszłych wydarzeń</h3>
     <h3 class="headline text-center" *ngIf="toggleNonAccepted && !toggleCreate">Lista niezaakceptowanych wydarzeń</h3>
-    <table class="table" *ngIf="!toggleCreate">
+    <table class="table table-events" *ngIf="!toggleCreate">
       <tbody *ngFor="let event of events">
         <tr>
-          <td class="event-dot-icons" width="10%">
+          <td class="event-dot-icons">
             <div *ngIf="event.TYPE=='Laboratorium'" class="dot laboratorium-dot"></div>
             <div *ngIf="event.TYPE=='Ćwiczenia'" class="dot cwiczenia-dot"></div>
             <div *ngIf="event.TYPE=='Projekt'" class="dot projekt-dot"></div>
             <div *ngIf="event.TYPE=='Zaliczenie'" class="dot zaliczenie-dot"></div>
             <div *ngIf="event.TYPE=='Wykłady'" class="dot wyklady-dot"></div>
             <div *ngIf="event.TYPE=='Inne'" class="dot inne-dot"></div>
-            <div class="important-icon" *ngIf="event.IS_IMPORTANT == true">
-              <img src="../assets/images/important.png">
-            </div>
-            <div class="private-icon" *ngIf="event.IS_PRIVATE == true">
-              <img src="../assets/images/lock.png">
-            </div>
+          </td>
+          <td class="event-stat-icons text-center" width="130px">
+              <div class="important-icon" *ngIf="event.IS_IMPORTANT == true">
+                  <img src="../assets/images/important.png">
+                </div>
+                <div class="private-icon" *ngIf="event.IS_PRIVATE == true">
+                  <img src="../assets/images/lock.png">
+                </div>
           </td>
           <td>
             <span>{{event.NAME}}</span>

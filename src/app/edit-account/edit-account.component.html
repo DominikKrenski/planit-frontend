@@ -24,8 +24,10 @@
       <div class="col-md-8 col-sm-12 col-xs-12">
         <h3 class="headline text-center">Edycja profilu</h3>
         <div class="clearfix">
-            <label for="filePicker" class="col-xs-3">Wczytaj avatar:</label>
-            <input class="col-xs-9" type="file" id="filePicker" (change)="handleFileSelect($event)">
+            <div class="input-file-wrapper">
+                <label for="filePicker"><i class="fa fa-download" aria-hidden="true"></i>{{ nameOfFile }}</label>
+                <input type="file" id="filePicker" (change)="handleFileSelect($event)">
+            </div>
         </div>
         <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm)">
               <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">

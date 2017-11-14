@@ -131,16 +131,16 @@ export class EditAccountComponent implements OnInit {
   }
 
   private base64textString:String="";
+  nameOfFile = "Wczytaj avatar";
   
   handleFileSelect(evt){
-      var files = evt.target.files;
-      var file = files[0];
+    var files = evt.target.files;
+    var file = files[0];
+    this.nameOfFile = file.name;
     
     if (files && file) {
         var reader = new FileReader();
-
         reader.onload =this._handleReaderLoaded.bind(this);
-
         reader.readAsBinaryString(file);
     }
   }

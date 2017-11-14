@@ -28,6 +28,7 @@ import { AccountService } from './my-account/account.service';
 import { TagsService } from './tags-list/tags.service';
 import { EventsService } from './events-list/events.service';
 import { EventDetailService } from './event-details/event-detail.service';
+import { CalendarListService } from './calendar-list/calendar-list.service';
 
 const routesConfig:Routes = [
   {path:'', redirectTo: 'frontpage', pathMatch:'full'},
@@ -78,7 +79,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     AccountService,
     TagsService,
     EventsService,
-    EventDetailService
+    EventDetailService,
+    CalendarListService
   ],
   bootstrap: [AppComponent]
 })

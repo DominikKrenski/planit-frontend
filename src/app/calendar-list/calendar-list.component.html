@@ -1,43 +1,73 @@
 <div class="container">
-    <div class="col-md-12" *ngIf="currentUser">
-      <br />
-      <div class="row header-prev-next-block">
-        <div class="col-xs-2 text-left">
-          <div
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate">
-              <img src="../assets/images/prev-button.svg">
-          </div>
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <div class="typesLegend">
+        <div>
+          <div class="dot laboratorium-dot"></div>
+          <div>Laboratorium</div>
         </div>
-        <div class="col-xs-8 text-center">
-          <h3 
-            class="today-title"
-            mwlCalendarToday
-            [(viewDate)]="viewDate">
-              {{ viewDate | calendarDate:(view + 'ViewTitle'):'pl' }}
-        </h3>
+        <div>
+          <div class="dot cwiczenia-dot"></div>
+          <div>Ćwiczenia</div>
         </div>
-        <div class="col-xs-2 text-right">
-            <div
-              mwlCalendarNextView
-              [view]="view"
-              [(viewDate)]="viewDate">
-                <img src="../assets/images/next-button.svg">
-            </div>
+        <div>
+          <div class="dot projekt-dot"></div>
+          <div>Projekt</div>
+        </div>
+        <div>
+          <div class="dot zaliczenie-dot"></div>
+          <div>Zaliczenie</div>
+        </div>
+        <div>
+          <div class="dot wyklady-dot"></div>
+          <div>Wykłady</div>
+        </div>
+        <div>
+          <div class="dot inne-dot"></div>
+          <div>Inne</div>
+        </div>
+    </div>
+    <br /><br/>
+    <div class="row header-prev-next-block">
+      <div class="col-xs-2 text-left">
+        <div
+          mwlCalendarPreviousView
+          [view]="view"
+          (click)="fetchEvents()"
+          [(viewDate)]="viewDate">
+            <img src="../assets/images/prev-button.svg">
         </div>
       </div>
-      
-      <mwl-calendar-month-view
-        [viewDate]="viewDate"
-        [events]="events"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        weekStartsOn="1"
-        [locale]="locale"
-      >
-      </mwl-calendar-month-view>
-      <br />
+      <div class="col-xs-8 text-center">
+        <h3 
+          class="today-title"
+          mwlCalendarToday
+          (click)="fetchEvents()"
+          [(viewDate)]="viewDate">
+            {{ viewDate | calendarDate:(view + 'ViewTitle'):'pl' }}
+      </h3>
+      </div>
+      <div class="col-xs-2 text-right">
+          <div
+            mwlCalendarNextView
+            [view]="view"
+            (click)="fetchEvents()"
+            [(viewDate)]="viewDate">
+              <img src="../assets/images/next-button.svg">
+          </div>
+      </div>
+    </div>
+    
+    <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [events]="events"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      weekStartsOn="1"
+      [locale]="locale"
+    >
+    </mwl-calendar-month-view>
+    <br />
   </div>
   <div class="col-md-12" *ngIf="!currentUser">
       <br /><br />     
