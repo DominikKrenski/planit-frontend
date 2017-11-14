@@ -11,6 +11,8 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import * as moment from 'moment';
+import 'eonasdan-bootstrap-datetimepicker';
 
 @Component({
   selector: 'event-details',
@@ -49,6 +51,11 @@ export class EventDetailsComponent implements OnInit {
 
   constructor(private eventDetailService:EventDetailService, private activatedRoute:ActivatedRoute, private http:Http) {
     this.currentUser = this.getAuth();
+    this.date = moment();
+    this.eventStart = moment();
+    this.eventEnd = moment();
+    this.a2eOptionsDate = {format: 'DD/MM/YYYY'};
+    this.a2eOptionsTime = {format: 'HH:mm'};
   }
 
   tags = [];
@@ -244,6 +251,22 @@ export class EventDetailsComponent implements OnInit {
       this.formSubmit = 1;
       return;
     }
+  }
+
+  date: moment.Moment;
+  eventStart: moment.Moment;
+  eventEnd: moment.Moment;
+  a2eOptionsDate: any;
+  a2eOptionsTime: any;
+
+  dateChange(date) {
+    this.date = date;
+  }
+  starthourChange(eventStart) {
+    this.eventStart = eventStart;
+  }
+  endhourChange(eventEnd) {
+    this.eventEnd = eventEnd;
   }
 
 }

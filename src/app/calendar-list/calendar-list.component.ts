@@ -89,7 +89,6 @@ export class CalendarListComponent implements OnInit {
 
     this.calendarlistService.getEvents((myevents)=>{
       this.myevents = myevents;
-      console.log(this.myevents);
       this.events = [];    
 
       for (let i = 0; i < this.myevents.length; i++) {

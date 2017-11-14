@@ -99,7 +99,6 @@ export class EventsListComponent implements OnInit {
     createEvent.START_HOUR = this.eventStart.format('HH:mm');
     createEvent.END_HOUR = this.eventEnd.format('HH:mm');
     if(valid) {
-      console.log('ook');
       this.eventsService.newEvent(createEvent);
       this.toggleCreate = !this.toggleCreate;
       this.toggleArchive = false;

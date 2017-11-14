@@ -53,9 +53,17 @@
               class="form-control" 
               name="NAME"
               class="form-control"
-              #passwordRef="ngModel"
+              #nameRef="ngModel"
               [(ngModel)]="userForm.NAME"
+              required
+              pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
+              minlength="5"
           >
+          <div class="error-validation">
+              <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+              <div *ngIf="(nameRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery, cyfry, spacje, przecinki lub kropki.</div>
+              <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy eventu to 5 znaków</div>
+          </div>
         </span>
       </div>
     </div>
@@ -72,9 +80,17 @@
               class="form-control" 
               name="PLACE"
               class="form-control"
-              #passwordRef="ngModel"
+              #placeRef="ngModel"
               [(ngModel)]="userForm.PLACE"
+              required
+              pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
+              minlength="5"
           >
+          <div class="error-validation">
+              <div *ngIf="(placeRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+              <div *ngIf="(placeRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery, cyfry, spacje, przecinki lub kropki.</div>
+              <div *ngIf="(placeRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy miejsca to 5 znaków</div>
+          </div>
         </span>
       </div>
     </div>
@@ -100,14 +116,18 @@
       <div class="col-md-8">
         <span *ngIf="!editToggle" class="padding-top-bottom">{{event.START_DATE}}</span>
         <span *ngIf="editToggle">
-          <input 
-              type="text" 
-              class="form-control" 
-              name="START_DATE"
-              class="form-control"
-              #passwordRef="ngModel"
+          <div class="input-group">
+              <input class="form-control" 
+              a2e-datetimepicker
+              [date]="date"
+              [options]="a2eOptionsDate"
+              name="eventstartdate"
+              #startdateRef="ngModel"
               [(ngModel)]="userForm.START_DATE"
-          >
+              (onChange)="dateChange($event)"
+              />
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
         </span>
       </div>
     </div>
@@ -119,14 +139,18 @@
       <div class="col-md-8">
         <span *ngIf="!editToggle" class="padding-top-bottom">{{event.START_HOUR}}</span>
         <span *ngIf="editToggle">
-          <input 
-              type="text" 
-              class="form-control" 
-              name="START_HOUR"
-              class="form-control"
-              #passwordRef="ngModel"
+          <div class="input-group">
+              <input class="form-control" 
+              a2e-datetimepicker
+              [date]="eventStart"
+              [options]="a2eOptionsTime"
+              name="eventstarthour"
+              #starthourRef="ngModel"
               [(ngModel)]="userForm.START_HOUR"
-          >
+              (onChange)="starthourChange($event)"
+              />
+              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div>
         </span>
       </div>
     </div>
@@ -138,14 +162,18 @@
       <div class="col-md-8">
         <span *ngIf="!editToggle" class="padding-top-bottom">{{event.END_HOUR}}</span>
         <span *ngIf="editToggle">
-          <input 
-              type="text" 
-              class="form-control" 
-              name="END_HOUR"
-              class="form-control"
-              #passwordRef="ngModel"
+          <div class="input-group">
+              <input class="form-control" 
+              a2e-datetimepicker
+              [date]="eventEnd"
+              [options]="a2eOptionsTime"
+              name="eventendhour"
+              #endhourRef="ngModel"
               [(ngModel)]="userForm.END_HOUR"
-          >
+              (onChange)="endhourChange($event)"
+              />
+              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div>
         </span>
       </div>
     </div>
@@ -168,7 +196,7 @@
     <h3 class="headline text-center">Informacje o tagach</h3>
     <div class="row">
       <div class="col-md-4">
-        <b>Lista wszystkich tagów:</b>
+          <div class="tags-label"><b>Lista wszystkich tagów:</b></div>
       </div>
       <div class="col-md-8">
         <span *ngFor="let tag of event.TAGS" class="tags-list-item">{{tag.NAME}}</span>
@@ -177,7 +205,7 @@
     <hr class="dashed-hr" />
     <div class="row">
       <div class="col-md-4">
-        <b>Dodaj tagi do wydarzenia:</b>
+        <div class="tags-label"><b>Dodaj tagi do wydarzenia:</b></div>
       </div>
       <div class="col-md-6">
         <span *ngFor="let option of tags">
@@ -193,7 +221,7 @@
     <hr class="dashed-hr" />
     <div class="row">
       <div class="col-md-4">
-        <b>Usuń tagi z wydarzenia:</b>
+          <div class="tags-label"><b>Usuń tagi z wydarzenia:</b></div>
       </div>
       <div class="col-md-6">
         <span *ngFor="let option of event.TAGS" class="delete-tags">

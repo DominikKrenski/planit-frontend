@@ -54,3 +54,10 @@ input[type="checkbox"]:checked + label {
     padding-bottom: 10px;
     display: block;
 }
+.tags-label {
+    margin-top: 3px;
+}
+.error-validation > div {
+    font-size: 13px;
+    margin-top: 5px;
+}
