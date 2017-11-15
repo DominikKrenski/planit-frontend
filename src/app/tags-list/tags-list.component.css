@@ -58,6 +58,12 @@
 .yes:hover  {
     text-decoration: underline;
 }
+.no.noclick, .yes.noclick {
+    cursor: default;
+}
+.no.noclick:hover, .yes.noclick:hover {
+    text-decoration: none;
+}
 .error-validation > div {
     font-size: 13px;
     margin-top: 5px;

@@ -72,6 +72,7 @@ export class RegisterPageComponent implements OnInit {
             this.userForm.START_YEAR = '';
             this.userForm.GROUP = '';
             this.userForm.INFO = '';
+            this.nameOfFile = "Wczytaj avatar";
           },
           err => {
             this.formSubmit = 1;
@@ -86,6 +87,7 @@ export class RegisterPageComponent implements OnInit {
             this.userForm.START_YEAR = '';
             this.userForm.GROUP = '';
             this.userForm.INFO = '';
+            this.nameOfFile = "Wczytaj avatar";
           }
       );
     } else {
@@ -101,14 +103,17 @@ export class RegisterPageComponent implements OnInit {
       this.userForm.START_YEAR = '';
       this.userForm.GROUP = '';
       this.userForm.INFO = '';
+      this.nameOfFile = "Wczytaj avatar";
       return;
     }
   }
   private base64textString:String="";
+  nameOfFile = "Wczytaj avatar";
   
   handleFileSelect(evt){
-      var files = evt.target.files;
-      var file = files[0];
+    var files = evt.target.files;
+    var file = files[0];
+    this.nameOfFile = file.name;
     
     if (files && file) {
         var reader = new FileReader();

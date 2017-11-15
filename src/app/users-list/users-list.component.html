@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="col-md-12" *ngIf="currentUser">
+  <div class="col-md-12" *ngIf="currentUser && admin">
     <br />
     <h3 class="headline text-center">Lista wszystkich użytkowników</h3>
     <table class="table">
@@ -74,7 +74,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-12" *ngIf="!currentUser">
+  <div class="col-md-12" *ngIf="!currentUser || !admin">
     <br /><br />     
     <div class="alert alert-warning" role="alert">
       <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!

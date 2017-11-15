@@ -8,6 +8,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
  } from '@angular/router';
+ import { AccountService } from './my-account/account.service';
 
 @Component({
   selector: 'app-root',
@@ -16,19 +17,38 @@ import {
 })
 export class AppComponent {
 
-  constructor(private router: Router) { }
+  authToken = JSON.parse(localStorage.getItem('currentUser'));
+  myinfo = {
+    ROLES: []
+  };
+  admin = false;
+
+  isAdmin(roles) {
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i].NAME=="ROLE_ADMIN") {
+        return true;
+      }
+    }    
+    return false;
+  }
+  
+  getAuth() {
+      return this.authToken;
+  };
+
+  constructor(private router: Router, private accountService:AccountService) { }
 
   ngOnInit() {
+    if(this.getAuth()) {
+      this.accountService.getUserInfo((myinfo)=>{
+        this.myinfo = myinfo;
+        this.admin = this.isAdmin(this.myinfo.ROLES);
+      });
+    }
   }
 
-  authToken = JSON.parse(localStorage.getItem('currentUser'));
-
   logout() {
-    function getAuth() {
-        return JSON.parse(localStorage.getItem('currentUser'));
-    };
-
-    if(getAuth()) {
+    if(this.getAuth()) {
       localStorage.removeItem('currentUser');
       this.router.navigate(['/']);
       location.reload();

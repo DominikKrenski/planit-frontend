@@ -32,7 +32,7 @@
       <tr>
         <th>Nazwa</th>
         <th width="20%" class="text-center">Czy zaakceptowany?</th>
-        <th width="10%" class="text-center">Usuń</th>
+        <th width="10%" class="text-center" *ngIf="admin">Usuń</th>
       </tr>
       <tbody *ngFor="let tag of tags">
         <tr>
@@ -56,10 +56,12 @@
             </span>
           </td>
           <td class="text-center">
-            <span *ngIf="tag.IS_ACCEPTED==true" class="yes" (click)="rejectTag(tag)">TAK</span>
-            <span *ngIf="tag.IS_ACCEPTED==false" class="no" (click)="acceptTag(tag)" >NIE</span>
+            <span *ngIf="((tag.IS_ACCEPTED==true) && admin)" class="yes" (click)="rejectTag(tag)">TAK</span>
+            <span *ngIf="((tag.IS_ACCEPTED==false) && admin)" class="no" (click)="acceptTag(tag)" >NIE</span>
+            <span *ngIf="((tag.IS_ACCEPTED==true) && !admin)" class="yes noclick">TAK</span>
+            <span *ngIf="((tag.IS_ACCEPTED==false) && !admin)" class="no noclick">NIE</span>
           </td>
-          <td class="text-center">
+          <td class="text-center" *ngIf="admin">
             <span class="remove-info" (click)="removeTag(tag)">x</span>
           </td>
         </tr>

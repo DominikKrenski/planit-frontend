@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TagsService } from './tags.service';
-import {ControlValueAccessor} from '@angular/forms';
+import { ControlValueAccessor } from '@angular/forms';
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'tags-list',
@@ -15,12 +16,25 @@ export class TagsListComponent implements OnInit {
   authToken = localStorage.getItem('currentUser');
   info = '';
   newName = '';
+  myinfo = {
+    ROLES: []
+  };
+  admin = false;
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private tagsService:TagsService) {
+  isAdmin(roles) {
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i].NAME=="ROLE_ADMIN") {
+        return true;
+      }
+    }    
+    return false;
+  }
+
+  constructor(private tagsService:TagsService, private accountService:AccountService) {
     this.currentUser = this.getAuth();
   }
 
@@ -28,6 +42,10 @@ export class TagsListComponent implements OnInit {
     if(this.getAuth()) {
       this.tagsService.getUsers((tags)=>{
         this.tags = tags;
+      });
+      this.accountService.getUserInfo((myinfo)=>{
+        this.myinfo = myinfo;
+        this.admin = this.isAdmin(this.myinfo.ROLES);
       });
     }    
   };
@@ -39,16 +57,7 @@ export class TagsListComponent implements OnInit {
       this.tags.splice(index, 1);
     }
   };
-  
-  isAdmin(roles) {
-    for(var i=0; i<roles.length; i++) {
-      if(roles[i].NAME=="ROLE_ADMIN") {
-        return true;
-      }
-    }    
-    return false;
-  }
-
+ 
   createTag = {
     "NAME": "",
     "IS_ACCEPTED": false

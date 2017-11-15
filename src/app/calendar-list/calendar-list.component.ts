@@ -92,6 +92,7 @@ export class CalendarListComponent implements OnInit {
       this.events = [];    
 
       for (let i = 0; i < this.myevents.length; i++) {
+        console.log(this.myevents[i]);
         var stringDateToObj = this.myevents[i].START_DATE.split("/");
         var dateObj = new Date(stringDateToObj[2], stringDateToObj[1] - 1, stringDateToObj[0]);
         var typeColor = this.myevents[i].TYPE;
@@ -130,10 +131,6 @@ export class CalendarListComponent implements OnInit {
         })
       }
     }, format(getStart(this.viewDate), 'DD/MM/YYYY'), format(getEnd(this.viewDate), 'DD/MM/YYYY'));    
-  }
-
-  setPrevStartEndDates() {
-    console.log('yyy');
   }
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;  

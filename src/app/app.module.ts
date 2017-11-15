@@ -22,6 +22,7 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 
 import { UsersService } from './users-list/users.service';
 import { AccountService } from './my-account/account.service';
@@ -43,6 +44,7 @@ const routesConfig:Routes = [
   {path:'change-password', component: ChangePasswordComponent},
   {path:'edit-account', component: EditAccountComponent},
   {path:'event-details/:eventid', component: EventDetailsComponent},
+  {path:'restore-password', component: RestorePasswordComponent},
 ]
 
 const routerModule = RouterModule.forRoot(routesConfig,{
@@ -62,7 +64,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     MyAccountComponent,
     ChangePasswordComponent,
     EditAccountComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    RestorePasswordComponent
   ],
   imports: [
     BrowserModule,

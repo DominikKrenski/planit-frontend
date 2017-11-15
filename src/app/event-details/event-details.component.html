@@ -102,7 +102,7 @@
       <div class="col-md-8">
         <span *ngIf="!editToggle" class="padding-top-bottom">{{event.TYPE}}</span>
         <span *ngIf="editToggle">
-          <select class="form-control" [(ngModel)]="userForm.TYPE" name="TYPE" >
+          <select class="form-control" [(ngModel)]="userForm.TYPE" name="TYPE" required >
                 <option *ngFor="let category of categories" [value]="category.name" [selected]="event.TYPE">{{category.name}}</option>                
             </select>
         </span>
@@ -124,6 +124,7 @@
               name="eventstartdate"
               #startdateRef="ngModel"
               [(ngModel)]="userForm.START_DATE"
+              required
               (onChange)="dateChange($event)"
               />
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -146,6 +147,7 @@
               [options]="a2eOptionsTime"
               name="eventstarthour"
               #starthourRef="ngModel"
+              required
               [(ngModel)]="userForm.START_HOUR"
               (onChange)="starthourChange($event)"
               />
@@ -169,6 +171,7 @@
               [options]="a2eOptionsTime"
               name="eventendhour"
               #endhourRef="ngModel"
+              required
               [(ngModel)]="userForm.END_HOUR"
               (onChange)="endhourChange($event)"
               />
@@ -199,7 +202,11 @@
           <div class="tags-label"><b>Lista wszystkich tagów:</b></div>
       </div>
       <div class="col-md-8">
-        <span *ngFor="let tag of event.TAGS" class="tags-list-item">{{tag.NAME}}</span>
+        <span *ngFor="let tag of event.TAGS">
+            <span *ngIf="tag.IS_ACCEPTED" class="tags-list-item">
+              {{tag.NAME}}
+            </span>
+        </span>
       </div>
     </div>
     <hr class="dashed-hr" />
@@ -209,9 +216,11 @@
       </div>
       <div class="col-md-6">
         <span *ngFor="let option of tags">
+          <span *ngIf="option.IS_ACCEPTED">
             <input  id="{{option.ID}}" name="Checks" type="checkbox" 
                     value="{{option.value}}" [(ngModel)]="option.checked" >
             <label for="{{option.ID}}">{{option.NAME}}</label>
+          </span>
         </span>
       </div>
       <div class="col-md-2">
@@ -225,9 +234,11 @@
       </div>
       <div class="col-md-6">
         <span *ngFor="let option of event.TAGS" class="delete-tags">
-            <input  id="{{option.ID}}" name="Checks2" type="checkbox" 
-                    value="{{option.value}}" [(ngModel)]="option.checked" >
-            <label for="{{option.ID}}">{{option.NAME}}</label>
+            <span *ngIf="option.IS_ACCEPTED">
+              <input  id="{{option.ID}}" name="Checks2" type="checkbox" 
+                      value="{{option.value}}" [(ngModel)]="option.checked" >
+              <label for="{{option.ID}}">{{option.NAME}}</label>
+            </span>
         </span>
       </div>
       <div class="col-md-2">

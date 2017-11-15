@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service'
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'users-list',
@@ -13,12 +14,25 @@ export class UsersListComponent implements OnInit {
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
   info = '';
+  myinfo = {
+    ROLES: []
+  };
+  admin = false;
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private usersService:UsersService) {
+  isAdmin(roles) {
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i].NAME=="ROLE_ADMIN") {
+        return true;
+      }
+    }    
+    return false;
+  }
+
+  constructor(private usersService:UsersService, private accountService:AccountService) {
     this.currentUser = this.getAuth();
   }
 
@@ -26,6 +40,10 @@ export class UsersListComponent implements OnInit {
     if(this.getAuth()) {
       this.usersService.getUsers((users)=>{
         this.users = users;
+      });
+      this.accountService.getUserInfo((myinfo)=>{
+        this.myinfo = myinfo;
+        this.admin = this.isAdmin(this.myinfo.ROLES);
       });
     }    
   };
@@ -37,15 +55,6 @@ export class UsersListComponent implements OnInit {
       this.users.splice(index, 1);
     }
   };
-  
-  isAdmin(roles) {
-    for(var i=0; i<roles.length; i++) {
-      if(roles[i].NAME=="ROLE_ADMIN") {
-        return true;
-      }
-    }    
-    return false;
-  }
 
   grantToAdmin(user) {
     this.usersService.grantToAdmin(user.ID);

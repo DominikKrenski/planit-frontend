@@ -1,170 +1,233 @@
 <div id="content" class="clearfix">
     <div class="container">
+        <br />
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
-                <div class="clearfix">
-                    <label for="filePicker" class="col-xs-2">Wczytaj avatar:</label>
-                    <input class="col-xs-10" type="file" id="filePicker" (change)="handleFileSelect($event)">
-                </div>
-            </div>
             <form class="form-horizontal login-form" name="form" #formRef="ngForm" novalidate="true" (ngSubmit)="save(formRef.valid, userForm)">
-              <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Błąd!</strong> Podałeś błędne dane do rejestracji.
-              </div>
-              <div class="alert alert-success alert-dismissible" *ngIf="formSubmit==2">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Brawo!</strong> Rejestracja przebiegła poprawnie. Możesz już zalogować się do swojego konta.
-              </div>
-              <div class="row">
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Login</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="username" 
-                          placeholder="Login" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.LOGIN"
-                      >
-                  </div>
+                <div class="alert alert-danger alert-dismissible" *ngIf="formSubmit==1">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Błąd!</strong> Podałeś błędne dane do rejestracji.
                 </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Hasło</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="password" 
-                          class="form-control" 
-                          name="password" 
-                          placeholder="Password"
-                          class="form-control"
-                          #passwordRef="ngModel"
-                          [(ngModel)]="userForm.PASSWORD"
-                      >
-                  </div>
+                <div class="alert alert-success alert-dismissible" *ngIf="formSubmit==2">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Brawo!</strong> Rejestracja przebiegła poprawnie. Możesz już zalogować się do swojego konta.
                 </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Powtórz hasło</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="password" 
-                          class="form-control" 
-                          name="repeated_password" 
-                          placeholder="Password"
-                          class="form-control"
-                          [(ngModel)]="userForm.REPEATED_PASSWORD"
-                      >
-                  </div>
+                <div class="row" *ngIf="formSubmit!=2">
+                    <div class="clearfix">
+                        <div class="input-file-wrapper">
+                            <label for="filePicker"><i class="fa fa-download" aria-hidden="true"></i>{{ nameOfFile }}</label>
+                            <input type="file" id="filePicker" (change)="handleFileSelect($event)">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Numer indeksu</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="index_number" 
-                          placeholder="100000" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.INDEX_NUMBER"
-                      >
-                  </div>
+                <br />
+                <div class="row" *ngIf="formSubmit!=2">
+                    <div class="form-group clearfix">
+                    <label class="col-xs-2 control-label">Login</label>
+                    <div class="col-xs-10">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="username" 
+                            placeholder="Login"
+                            [(ngModel)]="userForm.LOGIN"
+                            #loginRef="ngModel"
+                            required
+                            pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9]+"
+                            minlength="3"
+                        >
+                        <div class="error-validation">
+                            <div *ngIf="(loginRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                            <div *ngIf="(loginRef.errors?.pattern)" class="text-danger">Lgoin może zawierać jedynie litery i cyfry</div>
+                            <div *ngIf="(loginRef.errors?.minlength)" class="text-danger">Miminalna długość loginu to 3 znaki</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Hasło</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                name="password" 
+                                placeholder="Password"
+                                class="form-control"
+                                #passwordRef="ngModel"
+                                [(ngModel)]="userForm.PASSWORD"
+                                required
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Powtórz hasło</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                name="repeated_password" 
+                                placeholder="Password"
+                                class="form-control"
+                                [(ngModel)]="userForm.REPEATED_PASSWORD"
+                                required
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Numer indeksu</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="index_number" 
+                                placeholder="100000"
+                                [(ngModel)]="userForm.INDEX_NUMBER"
+                                #indexnumberdRef="ngModel"
+                                required
+                                pattern="[0-9]+"
+                                minlength="5"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(indexnumberdRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(indexnumberdRef.errors?.pattern)" class="text-danger">Numer indeksu może zawierać jedynie cyfry</div>
+                                <div *ngIf="(indexnumberdRef.errors?.minlength)" class="text-danger">Miminalna długość numeru indeksu to 5 znaków</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Email</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="email" 
+                                placeholder="jan.kowalski@planit.ovh" 
+                                #emailRef="ngModel"
+                                [(ngModel)]="userForm.EMAIL"
+                                required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                minlength="5"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(emailRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(emailRef.errors?.pattern)" class="text-danger">Błędna struktura adresu email</div>
+                                <div *ngIf="(emailRef.errors?.minlength)" class="text-danger">Miminalna długość adresu email to 5 znaków</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Imię</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="name" 
+                                placeholder="Jan" 
+                                #nameRef="ngModel"
+                                [(ngModel)]="userForm.NAME"
+                                required
+                                pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+                                minlength="3"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(nameRef.errors?.pattern)" class="text-danger">Imię może zawierać jedynie litery</div>
+                                <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość imienia to 3 znaki</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Nazwisko</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="surname" 
+                                placeholder="Kowalski" 
+                                #surnameRef="ngModel"
+                                [(ngModel)]="userForm.SURNAME"
+                                required
+                                pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+                                minlength="3"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(surnameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(surnameRef.errors?.pattern)" class="text-danger">Nazwisko może zawierać jedynie litery</div>
+                                <div *ngIf="(surnameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwiska to 3 znaki</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Rok rozpoczęcia</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="start_year" 
+                                placeholder="2014" 
+                                #startyearRef="ngModel"
+                                [(ngModel)]="userForm.START_YEAR"
+                                required
+                                pattern="[0-9]{4}"
+                                minlength="4"
+                                maxlength="4"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(startyearRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(startyearRef.errors?.pattern)" class="text-danger">Rok rozpoczęcia może zawierać jedynie cyfry</div>
+                                <div *ngIf="(startyearRef.errors?.minlength)" class="text-danger">Długość roku rozpoczęcia to 4 znaki</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">Grupa</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="group" 
+                                placeholder="2" 
+                                #groupRef="ngModel"
+                                [(ngModel)]="userForm.GROUP"
+                                required
+                                pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9]+"
+                                minlength="1"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(groupRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(groupRef.errors?.pattern)" class="text-danger">Nazwa grupy może zawierać jedynie cyfry i litery</div>
+                                <div *ngIf="(groupRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy grupy to 1 znak</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-xs-2 control-label">O mnie...</label>
+                        <div class="col-xs-10">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="info" 
+                                placeholder="Lubię koty" 
+                                #infoRef="ngModel"
+                                [(ngModel)]="userForm.INFO"
+                                required
+                                pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
+                                minlength="3"
+                            >
+                            <div class="error-validation">
+                                <div *ngIf="(infoRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+                                <div *ngIf="(infoRef.errors?.pattern)" class="text-danger">Pole może zawierać jedynie litery, cyfry, spacje, przecinki lub kropki.</div>
+                                <div *ngIf="(infoRef.errors?.minlength)" class="text-danger">Miminalna długość opisu to 3 znaki</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-xs-offset-2 col-xs-12 text-right">
+                            <button 
+                                type="submit" 
+                                class="btn btn-default"
+                            >Zarejestruj się</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Email</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="email" 
-                          placeholder="jan.kowalski@planit.ovh" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.EMAIL"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Imię</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="name" 
-                          placeholder="Jan" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.NAME"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Nazwisko</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="surname" 
-                          placeholder="Kowalski" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.SURNAME"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Rok rozpoczęcia</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="start_year" 
-                          placeholder="2014" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.START_YEAR"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">Grupa</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="group" 
-                          placeholder="2" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.GROUP"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label class="col-xs-2 control-label">O mnie...</label>
-                  <div class="col-xs-10">
-                      <input 
-                          type="text" 
-                          class="form-control" 
-                          name="info" 
-                          placeholder="Lubię koty" 
-                          required="required"
-                          #loginRef="ngModel"
-                          [(ngModel)]="userForm.INFO"
-                      >
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <div class="col-xs-offset-2 col-xs-12 text-right">
-                    <button 
-                        type="submit" 
-                        class="btn btn-default"
-                    >Zarejestruj się</button>
-                  </div>
-                </div>
-              </div>
             </form>
         </div>
     </div>

@@ -13,7 +13,7 @@
             <li><a routerLink="/calendar">Plan</a></li>
             <li><a routerLink="/events">Zadania</a></li>
             <li><a routerLink="/tags">Tagi</a></li>
-            <li><a routerLink="/users">Użytkownicy</a></li>
+            <li *ngIf="admin"><a routerLink="/users">Użytkownicy</a></li>
             <li><a routerLink="/my-account" *ngIf="authToken">Moje konto</a></li>
           </ul>
           <a href="/login" class="btn" *ngIf="!authToken">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from './account.service'
+import { AccountService } from './account.service';
 
 @Component({
   selector: 'my-account',
@@ -10,7 +10,7 @@ export class MyAccountComponent implements OnInit {
 
   currentUser = "";
   authToken = localStorage.getItem('currentUser');
-  myinfo = {}
+  myinfo = {};
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
