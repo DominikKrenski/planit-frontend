@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-md-12" *ngIf="currentUser">
     <br />
-    <h3 class="headline text-center">Dodaj nowy tag</h3>
+    <h3 class="headline2 text-center">Dodaj nowy tag</h3>
     <form #formRef="ngForm" novalidate="true" (ngSubmit)="newTag(formRef.valid, createTag)">
       <input 
         type="text" 
@@ -27,7 +27,7 @@
       </div>
     </form>
     <hr />
-    <h3 class="headline text-center">Lista tagów</h3>
+    <h3 class="headline2 text-center">Lista tagów</h3>
     <table class="table">
       <tr>
         <th>Nazwa</th>

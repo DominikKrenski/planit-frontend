@@ -96,7 +96,13 @@ a.c-inline-editor {
   font-family: 'Sacramento';
   font-size: 30px;
   margin: 0 0 30px; }
-
+.headline2 {
+  margin: 0 0 30px;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #333333;
+}
 /* TOP BAR */
 #top-bar {
   position: fixed;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from './events.service'
+import { EventsService } from './events.service';
+import { TagsService } from '../tags-list/tags.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
@@ -23,6 +24,11 @@ export class EventsListComponent implements OnInit {
   toggleNonAccepted = false;
   info = '';
   tags = [];
+  item = [];
+  items = [{
+    display: "",
+    value: ""
+  }];
 
   categories = [
     {name: 'Laboratorium'},
@@ -33,33 +39,51 @@ export class EventsListComponent implements OnInit {
     {name: 'Inne'}
   ];
 
-  options = {
-      format: "DD.MM.YYYY"
-  };
-
   date: moment.Moment;
   eventStart: moment.Moment;
   eventEnd: moment.Moment;
   a2eOptionsDate: any;
   a2eOptionsTime: any;
+  createEvent = {
+    "NAME": "",
+    "PLACE": "",
+    "TYPE": "",
+    "START_DATE": "",
+    "START_HOUR": "",
+    "END_HOUR": "",
+    "IS_ARCHIVE": false,
+    "IS_PRIVATE": false
+  }
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private eventsService:EventsService, private activatedRoute:ActivatedRoute) {
+  constructor(private eventsService:EventsService, private activatedRoute:ActivatedRoute, private tagsService:TagsService) {
     this.currentUser = this.getAuth();
     this.date = moment();
     this.eventStart = moment();
     this.eventEnd = moment();
     this.a2eOptionsDate = {format: 'DD/MM/YYYY'};
     this.a2eOptionsTime = {format: 'HH:mm'};
+    this.createEvent.START_DATE = this.date.format('DD/MM/YYYY');
+    this.createEvent.START_HOUR = this.date.format('HH:mm');
+    this.createEvent.END_HOUR = this.date.format('HH:mm');
   }
 
   ngOnInit() {
     if(this.getAuth()) {
       this.eventsService.getEvents((events)=>{
         this.events = events;
+      });
+      this.tagsService.getUsers((tags)=>{
+        this.tags = tags;
+        for (let i = 0; i < this.tags.length; i++) {
+          this.items.push({
+            display: this.tags[i].NAME,
+            value: this.tags[i].ID
+          })
+        }
       });
     }
     let eventid = this.activatedRoute.snapshot.params['eventid'];
@@ -74,49 +98,66 @@ export class EventsListComponent implements OnInit {
     return false;
   }
 
-  createEvent = {
-    "NAME": "",
-    "PLACE": "",
-    "TYPE": "",
-    "START_DATE": this.date,
-    "START_HOUR": this.eventStart,
-    "END_HOUR": this.eventEnd,
-    "IS_ARCHIVE": false
-  }
-
   dateChange(date) {
-    this.date = date;
+    this.createEvent.START_DATE = date.format('DD/MM/YYYY');
   }
   starthourChange(eventStart) {
-    this.eventStart = eventStart;
+    this.createEvent.START_HOUR = eventStart.format('HH:mm');
   }
   endhourChange(eventEnd) {
-    this.eventEnd = eventEnd;
+    this.createEvent.END_HOUR = eventEnd.format('HH:mm');
   }
 
+  queryTag = [];
+  onAddTags(taginfo) {
+      this.queryTag.push(taginfo.value);
+      let queryTagString = "";
+      for (let i = 0; i < this.queryTag.length; i++) {
+        if (i + 1 <  this.queryTag.length) queryTagString+=this.queryTag[i]+",";
+        else queryTagString+=this.queryTag[i];
+      }
+      this.eventsService.getEventsByTags((myevents)=>{
+        this.events = myevents;
+      }, queryTagString);
+  }
+  onRemoveTags(taginfo) {
+    let value = taginfo.value;    
+    this.queryTag = this.queryTag.filter(item => item !== value);    
+    let queryTagString = "";
+    if (this.queryTag.length > 0){
+      for (let i = 0; i < this.queryTag.length; i++) {
+        if (i + 1 <  this.queryTag.length) queryTagString+=this.queryTag[i]+",";
+        else queryTagString+=this.queryTag[i];
+      }
+      this.eventsService.getEventsByTags((myevents)=>{
+        this.events = myevents;
+      }, queryTagString);  
+    } else {
+      this.eventsService.getEvents((events)=>{
+        this.events = events;
+      });
+    }
+  }
+
+  infoCreate = false;
+
   newEvent(valid, createEvent) {
-    createEvent.START_DATE = this.date.format('DD/MM/YYYY');
-    createEvent.START_HOUR = this.eventStart.format('HH:mm');
-    createEvent.END_HOUR = this.eventEnd.format('HH:mm');
+    this.infoCreate = false;
     if(valid) {
       this.eventsService.newEvent(createEvent);
       this.toggleCreate = !this.toggleCreate;
       this.toggleArchive = false;
-      this.toggleActive = false;
+      this.toggleActive = true;
       this.togglePast = false;
-      this.toggleNonAccepted = true;
-      this.events.push({
-        "NAME": createEvent.NAME,
-        "PLACE": createEvent.PLACE,
-        "TYPE": createEvent.TYPE,
-        "START_DATE": createEvent.START_DATE,
-        "START_HOUR": createEvent.START_HOUR,
-        "END_HOUR": createEvent.END_HOUR,
-        "IS_ARCHIVE": false
+      this.toggleNonAccepted = false;
+      this.infoCreate = true;
+      this.eventsService.getEvents((events)=>{
+        this.events = events;
       });
     }
   }
   getArchiveEvents() {
+    this.infoCreate = false;
     this.toggleArchive = true;
     this.toggleActive = false;
     this.togglePast = false;
@@ -126,6 +167,7 @@ export class EventsListComponent implements OnInit {
       });
   }
   getActiveEvents() {
+    this.infoCreate = false;
     this.toggleArchive = false;
     this.toggleActive = true;
     this.togglePast = false;
@@ -135,6 +177,7 @@ export class EventsListComponent implements OnInit {
       });
   }
   archiveEvent(event) {
+    this.infoCreate = false;
     this.eventsService.archiveEvent(event.ID);
     var index = this.events.indexOf(event);
     if (index > -1) {
@@ -142,6 +185,7 @@ export class EventsListComponent implements OnInit {
     }
   }
   acceptEvent(event) {
+    this.infoCreate = false;
     this.eventsService.acceptEvent(event.ID);
     var index = this.events.indexOf(event);
     if (index > -1) {
@@ -149,6 +193,7 @@ export class EventsListComponent implements OnInit {
     }
   }
   getPastEvents() {
+    this.infoCreate = false;
     this.toggleArchive = false;
     this.toggleActive = false;
     this.togglePast = true;
@@ -158,6 +203,7 @@ export class EventsListComponent implements OnInit {
       });
   }
   getNonAcceptedEvents() {
+    this.infoCreate = false;
     this.toggleArchive = false;
     this.toggleActive = false;
     this.togglePast = false;
@@ -247,5 +293,5 @@ export class EventsListComponent implements OnInit {
 
     this.eventsService.removeTagsFromEvent(this.eventObject2);
     
-  }
+  }  
 }

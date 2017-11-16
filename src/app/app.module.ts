@@ -7,6 +7,7 @@ import { CalendarModule } from 'angular-calendar';
 import { InlineEditorModule } from 'ng2-inline-editor';
 import * as moment from 'moment';
 import { A2Edatetimepicker } from 'ng2-eonasdan-datetimepicker';
+import { TagInputModule } from 'ngx-chips';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -75,6 +76,7 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     CalendarModule.forRoot(),
     InlineEditorModule,
     A2Edatetimepicker,
+    TagInputModule,
     routerModule
   ],
   providers: [

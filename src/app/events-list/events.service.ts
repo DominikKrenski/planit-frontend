@@ -251,4 +251,31 @@ export class EventsService {
   removeTagsFromEvent(eventObject) {
     this.removeTagsFromThisEvent(eventObject);
   }
+
+
+  getAllEventsByTags(callback, tags) {
+    
+
+    let url = `http://planit-backend.com:8888/api/event/by-tags`;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.get(url + '?ids='+tags, options).subscribe((response:Response)=>{
+      let data = response.json();
+      let events = data;
+      callback(events);
+    });
+  }
+
+  getEventsByTags(callback, tags) {
+    this.getAllEventsByTags(callback, tags);
+  }
 }
