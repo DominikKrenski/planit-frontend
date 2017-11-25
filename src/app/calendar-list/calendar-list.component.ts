@@ -152,13 +152,4 @@ export class CalendarListComponent implements OnInit {
       }
     }
   }
-  
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd
-  }: CalendarEventTimesChangedEvent): void {
-    event.start = newStart;
-    event.end = newEnd;
-  }
 }
