@@ -6,6 +6,7 @@ import { Component, OnInit, Inject } from '@angular/core';
   styleUrls: ['./front-page.component.css']
 })
 export class FrontPageComponent implements OnInit {
+  authToken = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor() { }
 

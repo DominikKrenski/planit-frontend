@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="col-md-12" *ngIf="currentUser">
+    <br />
+    <div *ngIf="admin">
+      <h3 class="headline2 text-center">Dodaj nowe ogłoszenie</h3>
+      <form #formRef="ngForm" novalidate="true" (ngSubmit)="newTag(formRef.valid, createNews)">
+        <input 
+          type="text" 
+          class="form-control" 
+          name="newsname" 
+          placeholder="Nazwa"
+          #nameRef="ngModel"
+          required
+          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+          minlength="3"
+          [(ngModel)]="createNews.NAME"
+        />
+        <div class="error-validation">
+          <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+          <div *ngIf="(nameRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
+          <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
+        </div>
+        <br />
+        <input 
+          type="text" 
+          class="form-control" 
+          name="newscontent" 
+          placeholder="Treść ogłoszenia"
+          #contentRef="ngModel"
+          required
+          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+          minlength="3"
+          [(ngModel)]="createNews.CONTENT"
+        />
+        <div class="error-validation">
+            <div *ngIf="(contentRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
+            <div *ngIf="(contentRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
+            <div *ngIf="(contentRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
+        </div>
+        <br />
+        <div class="text-right">
+          <button 
+              type="submit" 
+              class="btn btn-default add-tag-button"
+          >Dodaj +</button>
+        </div>
+      </form>
+      <hr />
+    </div>
+    <h3 class="headline2 text-center">Lista ogłoszeń</h3>
+    <div *ngFor="let new of news">
+    </div>
+    <div class="alert alert-info" role="alert">
+      Przesunięcie egzaminu z grafiki na 10 stycznia!
+    </div>
+    <div class="alert alert-info" role="alert">
+      Pamiętajcie o złożeniu wniosków stypendialnych do końca października.
+    </div>
+    <div class="alert alert-info" role="alert">
+      Do końca listopada należy rozliczyć się z praktyk studenckich. Więcej informacji na kursie moodle.
+    </div>
+    
+  </div>
+  <div class="col-md-12" *ngIf="!currentUser">
+    <br /><br />     
+    <div class="alert alert-warning" role="alert">
+      <strong> Upps...</strong> Nie masz uprawnień, by zobaczyć tę stronę. Zaloguj się!
+    </div>
+    <br />
+  </div>
+</div>

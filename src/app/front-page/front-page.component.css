@@ -58,3 +58,9 @@
 #top2 .headline2 {
     color: #ffffff;
 }
+
+/* NEWS */
+#news a.btn {
+    width: 100%;
+    margin: 15px 0;
+}
