@@ -183,6 +183,30 @@ export class EventsService {
     this.getAllNonAcceptedEvents(callback);
   }
 
+  getAllNonAcceptedEventsAdmin(callback) {
+    let url = `http://planit-backend.com:8888/api/event/not-accepted-admin`;
+    let authToken = localStorage.getItem('currentUser');
+   
+    let token = JSON.parse(authToken);
+
+    let headers = new Headers();
+        headers.append('Authorization', `${token.authorization}`);
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.get(url, options).subscribe((response:Response)=>{
+      let data = response.json();
+      let events = data;
+      callback(events);
+    });
+  }
+
+  getNonAcceptedEventsAdmin(callback) {
+    this.getAllNonAcceptedEventsAdmin(callback);
+  }
+
   tags = [];
   getAllTags(callback) {
     let url = `http://planit-backend.com:8888/api/tag`;

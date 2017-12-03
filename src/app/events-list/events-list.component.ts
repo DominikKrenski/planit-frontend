@@ -4,6 +4,7 @@ import { TagsService } from '../tags-list/tags.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'events-list',
@@ -55,11 +56,21 @@ export class EventsListComponent implements OnInit {
     "IS_PRIVATE": false
   }
 
+  admin = false;
+  myinfo = {
+    ROLES: []
+  };
+
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private eventsService:EventsService, private activatedRoute:ActivatedRoute, private tagsService:TagsService) {
+  constructor (
+    private eventsService:EventsService, 
+    private activatedRoute:ActivatedRoute, 
+    private tagsService:TagsService,
+    private accountService:AccountService
+  ) {
     this.currentUser = this.getAuth();
     this.date = moment();
     this.eventStart = moment();
@@ -69,6 +80,10 @@ export class EventsListComponent implements OnInit {
     this.createEvent.START_DATE = this.date.format('DD/MM/YYYY');
     this.createEvent.START_HOUR = this.date.format('HH:mm');
     this.createEvent.END_HOUR = this.date.format('HH:mm');
+    this.accountService.getUserInfo((myinfo)=>{
+      this.myinfo = myinfo;
+      this.admin = this.isAdmin(this.myinfo.ROLES);
+    });
   }
 
   ngOnInit() {
@@ -87,6 +102,7 @@ export class EventsListComponent implements OnInit {
       });
     }
     let eventid = this.activatedRoute.snapshot.params['eventid'];
+
   };
   
   isAdmin(roles) {
@@ -209,6 +225,16 @@ export class EventsListComponent implements OnInit {
     this.togglePast = false;
     this.toggleNonAccepted = true;
     this.eventsService.getNonAcceptedEvents((events)=>{
+        this.events = events;
+      });
+  }
+  getNonAcceptedEventsAdmin() {
+    this.infoCreate = false;
+    this.toggleArchive = false;
+    this.toggleActive = false;
+    this.togglePast = false;
+    this.toggleNonAccepted = true;
+    this.eventsService.getNonAcceptedEventsAdmin((events)=>{
         this.events = events;
       });
   }

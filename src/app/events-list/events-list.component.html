@@ -24,7 +24,12 @@
           <button 
             class="btn btn-default light-button"
             (click)="getNonAcceptedEvents()"
-            *ngIf="!toggleCreate"
+            *ngIf="!toggleCreate && !admin"
+          >Niezaakceptowane</button>
+          <button 
+            class="btn btn-default light-button"
+            (click)="getNonAcceptedEventsAdmin()"
+            *ngIf="!toggleCreate  && admin"
           >Niezaakceptowane</button>
           <button 
             class="btn btn-default light-button"

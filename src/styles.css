@@ -298,3 +298,7 @@ a.c-inline-editor {
 .dot.inne-dot {
   background: #c5ea00;
 }
+
+.avatar-image {
+  border-radius: 50%;
+}
