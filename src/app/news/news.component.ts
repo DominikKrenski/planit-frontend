@@ -36,10 +36,6 @@ export class NewsComponent implements OnInit {
       private newsService:NewsService
   ) {
     this.currentUser = this.getAuth();
-    this.accountService.getUserInfo((myinfo)=>{
-      this.myinfo = myinfo;
-      this.admin = this.isAdmin(this.myinfo.ROLES);
-    });
   }
 
   ngOnInit() {
