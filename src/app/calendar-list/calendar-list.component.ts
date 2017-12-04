@@ -92,7 +92,6 @@ export class CalendarListComponent implements OnInit {
       this.events = [];    
 
       for (let i = 0; i < this.myevents.length; i++) {
-        console.log(this.myevents[i]);
         var stringDateToObj = this.myevents[i].START_DATE.split("/");
         var dateObj = new Date(stringDateToObj[2], stringDateToObj[1] - 1, stringDateToObj[0]);
         var typeColor = this.myevents[i].TYPE;
@@ -123,12 +122,14 @@ export class CalendarListComponent implements OnInit {
             break;
           }
         }
-        this.events.push({
-            start: dateObj,
-            end: dateObj,
-            title: this.myevents[i].NAME+ " " + this.myevents[i].START_HOUR + "-" + this.myevents[i].END_HOUR,
-            color: typeColorVal
-        })
+        if (this.myevents[i].IS_ACCEPTED) {
+          this.events.push({
+              start: dateObj,
+              end: dateObj,
+              title: this.myevents[i].NAME+ " " + this.myevents[i].START_HOUR + "-" + this.myevents[i].END_HOUR,
+              color: typeColorVal
+          })
+        }
       }
     }, format(getStart(this.viewDate), 'DD/MM/YYYY'), format(getEnd(this.viewDate), 'DD/MM/YYYY'));    
   }
