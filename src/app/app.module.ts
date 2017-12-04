@@ -24,6 +24,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
+import { NewsComponent } from './news/news.component';
 
 import { UsersService } from './users-list/users.service';
 import { AccountService } from './my-account/account.service';
@@ -31,7 +32,7 @@ import { TagsService } from './tags-list/tags.service';
 import { EventsService } from './events-list/events.service';
 import { EventDetailService } from './event-details/event-detail.service';
 import { CalendarListService } from './calendar-list/calendar-list.service';
-import { NewsComponent } from './news/news.component';
+import { NewsService } from './news/news.service';
 
 const routesConfig:Routes = [
   {path:'', redirectTo: 'frontpage', pathMatch:'full'},
@@ -88,7 +89,8 @@ const routerModule = RouterModule.forRoot(routesConfig,{
     TagsService,
     EventsService,
     EventDetailService,
-    CalendarListService
+    CalendarListService,
+    NewsService
   ],
   bootstrap: [AppComponent]
 })

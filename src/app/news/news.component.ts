@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../my-account/account.service';
+import { NewsService } from './news.service';
 
 @Component({
   selector: 'app-news',
@@ -30,7 +31,10 @@ export class NewsComponent implements OnInit {
   }
   
 
-  constructor(private accountService:AccountService) {
+  constructor(
+      private accountService:AccountService,
+      private newsService:NewsService
+  ) {
     this.currentUser = this.getAuth();
     this.accountService.getUserInfo((myinfo)=>{
       this.myinfo = myinfo;
@@ -44,18 +48,31 @@ export class NewsComponent implements OnInit {
         this.myinfo = myinfo;
         this.admin = this.isAdmin(this.myinfo.ROLES);
       });
+      this.newsService.getNews((news)=>{
+        this.news = news;
+      });
     }    
   };
+
   createNews = {
-    "NAME": "",
-    "CONTENT": ""
+    "TITLE": "",
+    "NOTIFICATION": ""
   }
-  newTag(valid, createTag) {
+  newNews(valid, createNews) {
     if(valid) {
+      this.newsService.newNews(createNews);
       this.news.push({
-        "NAME": createTag.NAME,
-        "CONTENT": createTag.CONTENT
+        "TITLE": createNews.TITLE,
+        "NOTIFICATION": createNews.NOTIFICATION
       });
     }
   }
+
+  removeNews(thisnew) {
+    this.newsService.removeNews(thisnew.ID);
+    var index = this.news.indexOf(thisnew);
+    if (index > -1) {
+      this.news.splice(index, 1);
+    }
+  };
 }

@@ -3,7 +3,7 @@
     <br />
     <div *ngIf="admin">
       <h3 class="headline2 text-center">Dodaj nowe ogłoszenie</h3>
-      <form #formRef="ngForm" novalidate="true" (ngSubmit)="newTag(formRef.valid, createNews)">
+      <form #formRef="ngForm" novalidate="true" (ngSubmit)="newNews(formRef.valid, createNews)">
         <input 
           type="text" 
           class="form-control" 
@@ -13,7 +13,7 @@
           required
           pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
           minlength="3"
-          [(ngModel)]="createNews.NAME"
+          [(ngModel)]="createNews.TITLE"
         />
         <div class="error-validation">
           <div *ngIf="(nameRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
@@ -21,8 +21,7 @@
           <div *ngIf="(nameRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
         </div>
         <br />
-        <input 
-          type="text" 
+        <textarea  
           class="form-control" 
           name="newscontent" 
           placeholder="Treść ogłoszenia"
@@ -30,8 +29,9 @@
           required
           pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
           minlength="3"
-          [(ngModel)]="createNews.CONTENT"
-        />
+          rows="3"
+          [(ngModel)]="createNews.NOTIFICATION"
+        ></textarea>
         <div class="error-validation">
             <div *ngIf="(contentRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
             <div *ngIf="(contentRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
@@ -49,17 +49,12 @@
     </div>
     <h3 class="headline2 text-center">Lista ogłoszeń</h3>
     <div *ngFor="let new of news">
+        <div class="alert alert-info" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" *ngIf="admin" (click)="removeNews(new)">&times;</button>
+          <b>{{new.TITLE}}</b><br />
+          {{new.NOTIFICATION}}
+        </div>
     </div>
-    <div class="alert alert-info" role="alert">
-      Przesunięcie egzaminu z grafiki na 10 stycznia!
-    </div>
-    <div class="alert alert-info" role="alert">
-      Pamiętajcie o złożeniu wniosków stypendialnych do końca października.
-    </div>
-    <div class="alert alert-info" role="alert">
-      Do końca listopada należy rozliczyć się z praktyk studenckich. Więcej informacji na kursie moodle.
-    </div>
-    
   </div>
   <div class="col-md-12" *ngIf="!currentUser">
     <br /><br />     
