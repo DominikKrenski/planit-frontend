@@ -9,7 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
-
+import {global} from "../../app/global";
 
 @Component({providers: [Http]})
 @Injectable()
@@ -21,7 +21,7 @@ export class EventDetailService {
   events = [];
 
   getAllEvents(eventid, callback) {
-    let url = `http://planit-backend.com:8888/api/event/` + eventid;
+    let url = global.myurl + `event/` + eventid;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -45,7 +45,7 @@ export class EventDetailService {
   }
 
   acceptThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/set-accepted/` + event;
+    let url = global.myurl + `event/set-accepted/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -67,7 +67,7 @@ export class EventDetailService {
   }
 
   revokeAcceptThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/revoke-accepted/` + event;
+    let url = global.myurl + `event/revoke-accepted/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -90,7 +90,7 @@ export class EventDetailService {
 
 
   importantThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/set-important/` + event;
+    let url = global.myurl + `event/set-important/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -112,7 +112,7 @@ export class EventDetailService {
   }
 
   revokeImportantThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/revoke-important/` + event;
+    let url = global.myurl + `event/revoke-important/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -134,7 +134,7 @@ export class EventDetailService {
   }
 
   privateThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/set-private/` + event;
+    let url = global.myurl + `event/set-private/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -156,7 +156,7 @@ export class EventDetailService {
   }
 
   revokePrivateThisEvent(event) {
-    let url = `http://planit-backend.com:8888/api/event/revoke-private/` + event;
+    let url = global.myurl + `event/revoke-private/` + event;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -179,7 +179,7 @@ export class EventDetailService {
 
   tags = [];
   getAllTags(callback) {
-    let url = `http://planit-backend.com:8888/api/tag`;
+    let url = global.myurl + `tag`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -203,7 +203,7 @@ export class EventDetailService {
   }
 
    addTagsToThisEvent(eventObject) {
-    let url = `http://planit-backend.com:8888/api/event/add-tags/` + eventObject.id;
+    let url = global.myurl + `event/add-tags/` + eventObject.id;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -225,7 +225,7 @@ export class EventDetailService {
   }
 
   removeTagsFromThisEvent(eventObject) {
-    let url = `http://planit-backend.com:8888/api/event/remove-tags/` + eventObject.id;
+    let url = global.myurl + `event/remove-tags/` + eventObject.id;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);

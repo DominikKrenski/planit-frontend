@@ -27,14 +27,14 @@
           placeholder="Treść ogłoszenia"
           #contentRef="ngModel"
           required
-          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
           minlength="3"
           rows="3"
           [(ngModel)]="createNews.NOTIFICATION"
         ></textarea>
         <div class="error-validation">
             <div *ngIf="(contentRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
-            <div *ngIf="(contentRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie litery</div>
+            <div *ngIf="(contentRef.errors?.pattern)" class="text-danger">Nazwa może zawierać jedynie jedynie litery, cyfry, spacje, przecinki lub kropki.</div>
             <div *ngIf="(contentRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
         </div>
         <br />

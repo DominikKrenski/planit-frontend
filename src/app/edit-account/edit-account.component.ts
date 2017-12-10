@@ -10,6 +10,7 @@ import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 import { AccountService } from '../my-account/account.service';
+import {global} from "../../app/global";
 
 @Component({
   selector: 'edit-account',
@@ -41,7 +42,7 @@ export class EditAccountComponent implements OnInit {
   }; 
   serverUser ="";
   getUser() {
-    this.serverUser = 'http://planit-backend.com:8888/api/user/update';
+    this.serverUser = global.myurl + 'user/update';
 
     let authToken = localStorage.getItem('currentUser');    
     let token = JSON.parse(authToken);
@@ -91,7 +92,7 @@ export class EditAccountComponent implements OnInit {
 
   formSubmit = 0;
 
-  server = 'http://planit-backend.com:8888/api/user/update';
+  server = global.myurl + 'user/update';
 
   save(valid, userForm) {
     if(this.base64textString!=null) {

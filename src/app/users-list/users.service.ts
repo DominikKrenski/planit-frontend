@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
+import {global} from "../../app/global";
 
 @Component({providers: [Http]})
 @Injectable()
@@ -20,7 +21,7 @@ export class UsersService {
   users = [];
 
   getAllUsers(callback) {
-    let url = `http://planit-backend.com:8888/api/admin/user`;
+    let url = global.myurl + `admin/user`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -44,7 +45,7 @@ export class UsersService {
   }
 
   removeThisUser(userId) {
-    let url = `http://planit-backend.com:8888/api/admin/user/delete/` + userId;
+    let url = global.myurl + `admin/user/delete/` + userId;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -66,7 +67,7 @@ export class UsersService {
   }
 
   grantThisUserToAdmin(userId) {
-    let url = `http://planit-backend.com:8888/api/admin/user/grant/` + userId;
+    let url = global.myurl + `admin/user/grant/` + userId;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);

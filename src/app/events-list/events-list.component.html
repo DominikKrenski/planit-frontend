@@ -34,7 +34,12 @@
           <button 
             class="btn btn-default light-button"
             (click)="getPastEvents()"
-            *ngIf="!toggleCreate"
+            *ngIf="!toggleCreate && !admin"
+          >Przeszłe</button>
+          <button 
+          class="btn btn-default light-button"
+          (click)="getPastEventsAdmin()"
+          *ngIf="!toggleCreate && admin"
           >Przeszłe</button>
           <button 
               class="btn btn-default light-button"

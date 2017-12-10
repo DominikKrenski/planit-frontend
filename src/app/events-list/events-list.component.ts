@@ -218,6 +218,16 @@ export class EventsListComponent implements OnInit {
         this.events = events;
       });
   }
+  getPastEventsAdmin() {
+    this.infoCreate = false;
+    this.toggleArchive = false;
+    this.toggleActive = false;
+    this.togglePast = true;
+    this.toggleNonAccepted = false;
+    this.eventsService.getPastEventsAdmin((events)=>{
+        this.events = events;
+      });
+  }
   getNonAcceptedEvents() {
     this.infoCreate = false;
     this.toggleArchive = false;

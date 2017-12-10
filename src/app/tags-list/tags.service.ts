@@ -9,7 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
-
+import {global} from "../../app/global";
 
 @Component({providers: [Http]})
 @Injectable()
@@ -21,7 +21,7 @@ export class TagsService {
   users = [];
 
   getAllUsers(callback) {
-    let url = `http://planit-backend.com:8888/api/tag`;
+    let url = global.myurl + `tag`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -45,7 +45,7 @@ export class TagsService {
   }
 
   removeThisTag(tag) {
-    let url = `http://planit-backend.com:8888/api/tag/` + tag;
+    let url = global.myurl + `tag/` + tag;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -67,7 +67,7 @@ export class TagsService {
   }
 
   newTagCreate(tag) {
-    let url = `http://planit-backend.com:8888/api/tag/create`;
+    let url = global.myurl + `tag/create`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -89,7 +89,7 @@ export class TagsService {
   }
 
   acceptThisTag(tag) {
-    let url = `http://planit-backend.com:8888/api/tag/accept/` + tag;
+    let url = global.myurl + `tag/accept/` + tag;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -111,7 +111,7 @@ export class TagsService {
   }
 
   rejectThisTag(tag) {
-    let url = `http://planit-backend.com:8888/api/tag/reject/` + tag;
+    let url = global.myurl + `tag/reject/` + tag;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -133,7 +133,7 @@ export class TagsService {
   }
 
   editThisTag(tagInfo) {
-    let url = `http://planit-backend.com:8888/api/tag/edit/` + tagInfo.ID;
+    let url = global.myurl + `tag/edit/` + tagInfo.ID;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);

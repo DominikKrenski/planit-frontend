@@ -9,7 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
-
+import {global} from "../../app/global";
 
 @Component({providers: [Http]})
 @Injectable()
@@ -21,7 +21,7 @@ export class NewsService {
   news = [];
 
   getAllNews(callback) {
-    let url = `http://planit-backend.com:8888/api/notification/all`;
+    let url = global.myurl + `notification/all`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -45,7 +45,7 @@ export class NewsService {
   }
 
   newNewsCreate(news) {
-    let url = `http://planit-backend.com:8888/api/notification/create`;
+    let url = global.myurl + `notification/create`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);
@@ -67,7 +67,7 @@ export class NewsService {
   }
 
   removeThisNews(news) {
-    let url = `http://planit-backend.com:8888/api/notification/delete`;
+    let url = global.myurl + `notification/delete`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);

@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import {global} from "../../app/global";
 
 @Component({
   selector: 'register-page',
@@ -41,7 +42,7 @@ export class RegisterPageComponent implements OnInit {
     "INFO": ""
   };
 
-  server = 'http://planit-backend.com:8888/api/user/register';
+  server = global.myurl + 'user/register';
 
   save(valid, userForm) {
     if(this.base64textString!=null) {

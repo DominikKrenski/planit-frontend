@@ -13,6 +13,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 import * as moment from 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
+import {global} from "../../app/global";
 
 @Component({
   selector: 'event-details',
@@ -92,7 +93,7 @@ export class EventDetailsComponent implements OnInit {
         this.userForm.IS_IMPORTANT = this.event['IS_IMPORTANT'];
       });
     }
-    this.server = 'http://planit-backend.com:8888/api/event/' + eventid;
+    this.server = global.myurl + 'event/' + eventid;
   };
   
   acceptEvent(event) {

@@ -42,7 +42,7 @@ const colors: any = {
     primary: '#00eacc'
   },
   inne: {
-    primary: 'c5ea00'
+    primary: '#c5ea00'
   }
 };
 

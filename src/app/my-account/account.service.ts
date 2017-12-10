@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
+import {global} from "../../app/global";
 
 @Component({providers: [Http]})
 @Injectable()
@@ -20,7 +21,7 @@ export class AccountService {
   users = [];
 
   getMyUserInfo(callback) {
-    let url = `http://planit-backend.com:8888/api/user/update`;
+    let url = global.myurl + `user/update`;
     let authToken = localStorage.getItem('currentUser');
    
     let token = JSON.parse(authToken);

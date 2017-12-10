@@ -9,6 +9,7 @@ import {
 import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
+import {global} from "../../app/global";
 
 @Component({
   selector: 'login-page',
@@ -32,7 +33,7 @@ export class LoginPageComponent implements OnInit {
     "password": ""
   };
 
-  server = 'http://planit-backend.com:8888/api/user/login';
+  server = global.myurl + 'user/login';
 
   save(valid, userForm) {
     if (valid) {

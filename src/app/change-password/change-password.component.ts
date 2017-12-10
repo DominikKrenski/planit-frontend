@@ -10,6 +10,7 @@ import { Subject, Observable } from 'rxjs';
 import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 import { AccountService } from '../my-account/account.service';
+import {global} from "../../app/global";
 
 @Component({
   selector: 'change-password',
@@ -49,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
     "NEW_PASSWORD_CONFIRM": ""
   };
 
-  server = 'http://planit-backend.com:8888/api/user/change-password';
+  server = global.myurl + 'user/change-password';
 
   save(valid, userForm) {
     
