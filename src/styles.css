@@ -302,3 +302,54 @@ a.c-inline-editor {
 .avatar-image {
   border-radius: 50%;
 }
+
+.hamburger-menu {
+  display: none;
+  width: 35px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+.hamburger-menu span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #333;
+}
+
+.hamburger-menu span + span {
+  margin-top: 10px;
+}
+
+@media(max-width: 1200px) {
+  .hamburger-menu {
+    display: block;
+  }
+  .menu.desktop-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    float: none;
+  }
+  .menu.desktop-menu.hide-mobile {
+    display: none;
+  }
+  #top-bar .menu .btn, #top-bar .menu ul,
+  #top-bar .menu ul li {
+    display: block;
+  }
+  #top-bar .menu {
+    float: none;
+    background: #333;
+  }
+  #top-bar .menu ul {
+    padding: 0;
+    margin-bottom: 15px;
+  }
+  #top-bar .menu ul li a {
+    display: block;
+    padding: 5px 20px;
+    color: #fff;
+  }
+}

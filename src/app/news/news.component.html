@@ -11,7 +11,7 @@
           placeholder="Nazwa"
           #nameRef="ngModel"
           required
-          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ]+"
+          pattern="[a-zA-ZąćęłńóśżźĄĆĘŁŃÓŚŻŹ0-9 ,.]+"
           minlength="3"
           [(ngModel)]="createNews.TITLE"
         />
@@ -48,7 +48,7 @@
       <hr />
     </div>
     <h3 class="headline2 text-center">Lista ogłoszeń</h3>
-    <div *ngFor="let new of news">
+    <div *ngFor="let new of news.reverse()">
         <div class="alert alert-info" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true" *ngIf="admin" (click)="removeNews(new)">&times;</button>
           <b>{{new.TITLE}}</b><br />

@@ -22,6 +22,7 @@ export class AppComponent {
     ROLES: []
   };
   admin = false;
+  togglemenu = true;
 
   isAdmin(roles) {
     for(var i=0; i<roles.length; i++) {
@@ -53,5 +54,9 @@ export class AppComponent {
       this.router.navigate(['/']);
       location.reload();
     }
+  }
+
+  toggleMenu() {
+    this.togglemenu = !this.togglemenu;
   }
 }
