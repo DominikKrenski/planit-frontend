@@ -14,6 +14,7 @@ import 'rxjs/Rx';
 import * as moment from 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
 import {global} from "../../app/global";
+import { AccountService } from '../my-account/account.service';
 
 @Component({
   selector: 'event-details',
@@ -45,18 +46,40 @@ export class EventDetailsComponent implements OnInit {
   ];
 
   server = '';
+  admin = false;
+  myinfo = {
+    ROLES: []
+  };
 
   getAuth() {
       return JSON.parse(localStorage.getItem('currentUser'));
   };  
 
-  constructor(private eventDetailService:EventDetailService, private activatedRoute:ActivatedRoute, private http:Http) {
+  constructor (
+    private eventDetailService:EventDetailService, 
+    private activatedRoute:ActivatedRoute, 
+    private http:Http,
+    private accountService:AccountService
+  ) {
     this.currentUser = this.getAuth();
     this.date = moment();
     this.eventStart = moment();
     this.eventEnd = moment();
     this.a2eOptionsDate = {format: 'DD/MM/YYYY'};
     this.a2eOptionsTime = {format: 'HH:mm'};
+    this.accountService.getUserInfo((myinfo)=>{
+      this.myinfo = myinfo;
+      this.admin = this.isAdmin(this.myinfo.ROLES);
+    });
+  }
+
+  isAdmin(roles) {
+    for(var i=0; i<roles.length; i++) {
+      if(roles[i].NAME=="ROLE_ADMIN") {
+        return true;
+      }
+    }    
+    return false;
   }
 
   tags = [];

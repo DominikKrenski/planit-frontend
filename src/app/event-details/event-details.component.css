@@ -12,11 +12,12 @@
 .yes {
     color: #689600;
     border: 1px solid #689600;
-    cursor: pointer;
 }
 .no {
     color: #e40404;
     border: 1px solid #e40404;
+}
+.yes-no-button {
     cursor: pointer;
 }
 .tags-list-item {

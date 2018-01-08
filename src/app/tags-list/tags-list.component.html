@@ -27,6 +27,12 @@
       </div>
     </form>
     <hr />
+    <div class="alert alert-warning alert-dismissible" *ngIf="!admin">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Uwaga!</strong> Nie posiadasz roli Administratora.
+        Oznacza to, że nie możesz akceptować tagów, usuwać ich ani ich edytować.
+        Jeśli dodałeś tag, poczekaj aż Administrator zaakceptuje go jako publiczny.
+    </div>
     <h3 class="headline2 text-center">Lista tagów</h3>
     <table class="table">
       <tr>
@@ -37,7 +43,7 @@
       <tbody *ngFor="let tag of tags">
         <tr>
           <td>
-            <span *ngIf="info != tag.NAME" class="tag-name">
+            <span *ngIf="(info != tag.NAME) && admin" class="tag-name">
               <inline-editor 
                 type="text" 
                 [(ngModel)]="tag.NAME" 
@@ -54,6 +60,7 @@
                   <div *ngIf="(nameEditRef.errors?.minlength)" class="text-danger">Miminalna długość nazwy to 3 znaki</div>
               </div>
             </span>
+            <span *ngIf="!admin">{{tag.NAME}}</span>
           </td>
           <td class="text-center">
             <span *ngIf="((tag.IS_ACCEPTED==true) && admin)" class="yes" (click)="rejectTag(tag)">TAK</span>

@@ -149,7 +149,7 @@
                   </div>
                 </div>
                 <div class="form-group clearfix">
-                  <label for="inputPassword" class="col-xs-3 control-label">Rok rozpoczęcia</label>
+                  <label for="inputPassword" class="col-xs-3 control-label">Rok rozpoczęcia studiów</label>
                   <div class="col-xs-9">
                       <input 
                           type="text" 
@@ -166,8 +166,8 @@
                       >
                       <div class="error-validation">
                           <div *ngIf="(startyearRef.errors?.required) && (!formRef.untouched)" class="text-danger">To pole jest wymagane</div>  
-                          <div *ngIf="(startyearRef.errors?.pattern)" class="text-danger">Rok rozpoczęcia może zawierać jedynie cyfry</div>
-                          <div *ngIf="(startyearRef.errors?.minlength)" class="text-danger">Długość roku rozpoczęcia to 4 znaki</div>
+                          <div *ngIf="(startyearRef.errors?.pattern)" class="text-danger">Rok rozpoczęcia studiów może zawierać jedynie cyfry</div>
+                          <div *ngIf="(startyearRef.errors?.minlength)" class="text-danger">Długość roku rozpoczęcia studiów to 4 znaki</div>
                       </div>
                   </div>
                 </div>
